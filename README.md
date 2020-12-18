@@ -1,6 +1,6 @@
-# civic_points
+# Civic points
 
-A new Flutter application.
+A Flutter application to manage the citizens partecipation in public life.
 
 ## Getting Started
 
