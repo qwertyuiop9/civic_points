@@ -37,7 +37,10 @@ class DetailedEvent extends StatelessWidget {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
-                Image.network(imageSource[event.id]),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                  child: Image.network(imageSource[event.id]),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(

@@ -7,10 +7,10 @@ import 'event_page.dart';
 
 class EventListPage extends StatelessWidget {
   final List<Event> eventList = [
-    Event(1, idEventTitle[1], 20.0, DateTime.now(), idEventDescription[1]),
-    Event(2, idEventTitle[2], 50.0, DateTime.now(), idEventDescription[2]),
-    Event(3, idEventTitle[3], 10.0, DateTime.now(), idEventDescription[3]),
-    Event(4, idEventTitle[4], 27.4, DateTime.now(), idEventDescription[4])
+    Event(0, idEventTitle[1], 20.0, DateTime.now(), idEventDescription[1]),
+    Event(1, idEventTitle[2], 50.0, DateTime.now(), idEventDescription[2]),
+    Event(2, idEventTitle[3], 10.0, DateTime.now(), idEventDescription[3]),
+    Event(3, idEventTitle[4], 27.4, DateTime.now(), idEventDescription[4])
   ];
 
   final List<String> imageSource = [
@@ -68,7 +68,7 @@ class EventListPage extends StatelessWidget {
                     Flexible(
                       child: Text(
                         '''${(event.description).replaceRange(150, event.description.length, '...')}''',
-                        maxLines: 3,
+                        maxLines: 6,
                         softWrap: true,
                       ),
                     ),
