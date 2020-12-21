@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 //import 'login.dart';
 import 'test.dart';
+import 'home_view.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Test(),
+      home: EventListPage(),
     );
   }
 }

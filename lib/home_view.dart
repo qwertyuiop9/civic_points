@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'Event.dart';
 import 'data_repo.dart';
 import 'event_page.dart';
+import 'serverConnection.dart';
 
 class EventListPage extends StatelessWidget {
   final List<Event> eventList = [
@@ -19,6 +20,8 @@ class EventListPage extends StatelessWidget {
     "https://www.lavocedinewyork.com/wp-content/uploads/2019/05/lens-3046269_1280-620x430.jpg",
     "https://cf.microninja.me/wp-content/uploads/2018/05/heart-1847868_1280-e1526479142409.png"
   ];
+
+
 
   @override
   Widget build(BuildContext context) {
