@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'serverConnection.dart';
+import 'dart:convert';
 
 class Test extends StatefulWidget {
   @override
@@ -114,7 +115,8 @@ class _TestState extends State<Test>{
                           child: ElevatedButton(
                             onPressed: () async {
                               String response = await serverConnection.getAllEvents();
-                              print(response);
+                              final body = json.decode(response);
+                              print('${body.runtimeType} : $body');
                             },
                             child: Text('Ricevi Eventi'),
                           ),
