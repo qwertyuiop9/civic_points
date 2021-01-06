@@ -33,18 +33,18 @@ class DetailedEvent extends StatelessWidget {
                   width: double.infinity,
                   color: Colors.white,
                   child: Text(
-                    event.title,
+                    event.titoloEvento,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                  child: Image.network(imageSource[event.id]),
+                  child: Image.network(event.urlToImage),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    '''${(event.description)}''',
+                    '''${(event.descrizione)}''',
                     softWrap: true,
                   ),
                 ),

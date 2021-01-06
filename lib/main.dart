@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 //import 'login.dart';
 import 'test.dart';
-import 'home_view.dart';
+import 'EventListState.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: EventListPage(),
+      home: EventsList(),
     );
   }
 }

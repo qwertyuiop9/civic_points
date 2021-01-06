@@ -1,10 +1,43 @@
-class Event {
-  final int id;
-  final String title;
-  final double civicPoints;
-  final DateTime startDate;
-  final String description;
+import 'dart:convert';
 
-  Event(
-      this.id, this.title, this.civicPoints, this.startDate, this.description);
+import 'package:civic_points/constants.dart';
+import 'package:civic_points/webservice.dart';
+import 'package:flutter/widgets.dart';
+
+class Event {
+
+  final String id;
+  final String comune;
+  final String titoloEvento;
+  final String descrizione;
+  final String data;
+  final String urlToImage;
+  final int civicPoints;
+
+  Event({this.id, this.comune, this.titoloEvento, this.descrizione, this.data, this.urlToImage, this.civicPoints});
+
+  factory Event.fromJson(Map<String,dynamic> json) {
+    return Event(
+      id: json['_id'],
+      comune: json['comune'],
+      titoloEvento: json['titoloEvento'],
+      descrizione: json['descrizione'],
+      data: json['data'],
+      urlToImage: json['urlToImage'] ?? 'https://via.placeholder.com/150', //Constants.NEWS_PLACEHOLDER_IMAGE_ASSET_URL,
+      civicPoints: 20
+    );
+  }
+
+  static Resource<List<Event>> get all {
+
+    return Resource(
+        url: Constants.HEADLINE_NEWS_URL,
+        parse: (response) {
+          final result = json.decode(response.body);
+          Iterable list = result;
+          return list.map((model) => Event.fromJson(model)).toList();
+        }
+    );
+
+  }
 }
