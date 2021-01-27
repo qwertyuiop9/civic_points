@@ -31,7 +31,7 @@ class WelcomePage extends StatelessWidget {
               Text(
                 name,
                 style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 20,
                     color: Colors.deepPurple,
                     fontWeight: FontWeight.bold),
               ),
@@ -43,7 +43,7 @@ class WelcomePage extends StatelessWidget {
               Text(
                 email,
                 style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 20,
                     color: Colors.deepPurple,
                     fontWeight: FontWeight.bold),
               ),
