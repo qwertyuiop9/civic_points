@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "888508134558",
+    "project_id": "civic-points",
+    "storage_bucket": "civic-points.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888508134558:android:47e75bf52349efc975f78f",
+        "android_client_info": {
+          "package_name": "andreavendrame.com.civic_points"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888508134558-l8pr08c8klto05v6s16kap3580ms44dn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "andreavendrame.com.civic_points",
+            "certificate_hash": "f52bd1c3811842f828e15984ab1108f9e2f2a7a8"
+          }
+        },
+        {
+          "client_id": "888508134558-khkoqhuo5koojfk5jntu9cko8p0bhhee.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYJ35fflPFIISBUY-iF-gpqAyDU2U4gTg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "888508134558-khkoqhuo5koojfk5jntu9cko8p0bhhee.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
