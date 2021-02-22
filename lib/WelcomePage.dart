@@ -7,6 +7,8 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+      ),
       body: Container(
         margin: const EdgeInsets.fromLTRB(16, 16, 0, 0),
         width: double.infinity,
@@ -25,7 +27,7 @@ class WelcomePage extends StatelessWidget {
               ),
               SizedBox(height: 40),
               Text(
-                'Name',
+                'Utente',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               Text(
