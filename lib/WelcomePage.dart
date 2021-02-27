@@ -1,14 +1,13 @@
-import 'package:civic_points/home_view.dart';
-import 'package:flutter/material.dart';
+import 'package:civic_points/EventListState.dart';
 import 'package:civic_points/login.dart';
 import 'package:civic_points/sign_in.dart';
+import 'package:flutter/material.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
+      appBar: AppBar(),
       body: Container(
         margin: const EdgeInsets.fromLTRB(16, 16, 0, 0),
         width: double.infinity,
@@ -53,7 +52,10 @@ class WelcomePage extends StatelessWidget {
               RaisedButton(
                 onPressed: () {
                   signOutGoogle();
-                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {return LoginPage();}), ModalRoute.withName('/'));
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) {
+                    return LoginPage();
+                  }), ModalRoute.withName('/'));
                 },
                 child: Text("Sign Out"),
                 textColor: Colors.white,
@@ -82,7 +84,9 @@ class WelcomePage extends StatelessWidget {
       ),
     );
   }
+
   Future navigateToEventListPage(context) async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => EventListPage()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => EventsList()));
   }
 }

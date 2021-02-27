@@ -1,43 +1,27 @@
+import 'package:civic_points/event_details_page.dart';
+import 'package:civic_points/webservice.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter/widgets.dart';
 
-import 'Event.dart';
-import 'data_repo.dart';
-import 'event_page.dart';
+import 'event.dart';
 
-class EventListPage extends StatelessWidget {
-  final List<Event> eventList = [
-    Event(0, idEventTitle[1], 20.0, DateTime.now(), idEventDescription[1]),
-    Event(1, idEventTitle[2], 50.0, DateTime.now(), idEventDescription[2]),
-    Event(2, idEventTitle[3], 10.0, DateTime.now(), idEventDescription[3]),
-    Event(3, idEventTitle[4], 27.4, DateTime.now(), idEventDescription[4])
-  ];
-
-  final List<String> imageSource = [
-    "https://tedxcatania.com/wp-content/uploads/2018/10/tedx.jpg",
-    "https://sviluppomanageriale.it/media/zoo/images/3-citta-sostenibile_ca730cbae17431898db2108b135ef01e.png",
-    "https://www.lavocedinewyork.com/wp-content/uploads/2019/05/lens-3046269_1280-620x430.jpg",
-    "https://cf.microninja.me/wp-content/uploads/2018/05/heart-1847868_1280-e1526479142409.png"
-  ];
+class EventsListState extends State<EventsList> {
+  List<Event> _eventDetails = [];
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Eventi disponibili"),
-      ),
-      body: Container(
-        child: new ListView.builder(
-          itemCount: eventIds.length,
-          itemBuilder: (BuildContext context, int index) =>
-              buildEventCard(context, index),
-        ),
-      ),
-    );
+  void initState() {
+    super.initState();
+    _populateNewsArticles();
   }
 
-  Widget buildEventCard(BuildContext context, int index) {
-    final event = eventList[index];
+  void _populateNewsArticles() {
+    Webservice().load(Event.all).then((event) => {
+          setState(() => {_eventDetails = event})
+        });
+  }
+
+  Widget _buildItemsForListView(BuildContext context, int index) {
+    final event = _eventDetails[index];
     return new Container(
       child: Card(
         child: Padding(
@@ -49,7 +33,7 @@ class EventListPage extends StatelessWidget {
                 width: double.infinity,
                 color: Colors.white,
                 child: Text(
-                  event.title,
+                  event.titoloEvento,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -57,7 +41,7 @@ class EventListPage extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(0, 16, 0, 16),
                 child: Container(
                   alignment: Alignment.center,
-                  child: Image.network(imageSource[index],
+                  child: Image.network(event.urlToImage,
                       height: 250, width: double.infinity, fit: BoxFit.cover),
                 ),
               ),
@@ -66,11 +50,7 @@ class EventListPage extends StatelessWidget {
                 child: Row(
                   children: [
                     Flexible(
-                      child: Text(
-                        '''${(event.description).replaceRange(150, event.description.length, '...')}''',
-                        maxLines: 6,
-                        softWrap: true,
-                      ),
+                      child: Text(event.descrizione),
                     ),
                   ],
                 ),
@@ -84,9 +64,12 @@ class EventListPage extends StatelessWidget {
                       style: new TextStyle(color: Colors.green),
                     ),
                     Spacer(),
-                    Text(DateFormat('dd/MM/yyyy')
-                        .format(event.startDate)
-                        .toString()),
+                    Text(
+                        /*DateFormat('dd/MM/yyyy')
+                        .format(event.data)
+                        .toString())
+                        */
+                        event.data),
                   ],
                 ),
               ),
@@ -104,7 +87,7 @@ class EventListPage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => DetailedEvent(
-                                event: eventList[index],
+                                event: _eventDetails[index],
                               )),
                     );
                   },
@@ -116,4 +99,21 @@ class EventListPage extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Events'),
+        ),
+        body: ListView.builder(
+          itemCount: _eventDetails.length,
+          itemBuilder: _buildItemsForListView,
+        ));
+  }
+}
+
+class EventsList extends StatefulWidget {
+  @override
+  createState() => EventsListState();
 }
