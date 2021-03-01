@@ -1,3 +1,4 @@
+import 'package:civic_points/event_create.dart';
 import 'package:civic_points/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:civic_points/login.dart';
@@ -57,7 +58,21 @@ class WelcomePage extends StatelessWidget {
                 },
                 child: Text("Sign Out"),
                 textColor: Colors.white,
-                color: Colors.blueGrey,
+                color: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                elevation: 5,
+              ),
+              SizedBox(height: 40),
+              // ignore: deprecated_member_use
+              RaisedButton(
+                onPressed: () {
+                  navigateToEventListPage(context);
+                },
+                child: Text("Eventi disponibili"),
+                textColor: Colors.white,
+                color: Colors.blue,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
@@ -66,16 +81,17 @@ class WelcomePage extends StatelessWidget {
               SizedBox(height: 40),
               RaisedButton(
                 onPressed: () {
-                  navigateToEventListPage(context);
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => createEvent()));
                 },
-                child: Text("Eventi disponibili"),
+                child: Text("Crea evento"),
                 textColor: Colors.white,
-                color: Colors.blueGrey,
+                color: Colors.blue,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 elevation: 5,
-              )
+              ),
             ],
           ),
         ),

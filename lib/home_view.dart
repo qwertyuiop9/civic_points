@@ -95,7 +95,7 @@ class EventListPage extends StatelessWidget {
                 child: RaisedButton(
                   child: Text("Scopri di più"),
                   textColor: Colors.white,
-                  color: Colors.blueGrey,
+                  color: Colors.blue,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
