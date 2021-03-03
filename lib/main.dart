@@ -1,6 +1,8 @@
-import 'package:civic_points/EventListState.dart';
+//import 'package:civic_points/EventListState.dart';
+import 'package:civic_points/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:civic_points/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //home: LoginPage(),
-      home: EventsList(),
+      home: LoginPage(),
     );
   }
 }

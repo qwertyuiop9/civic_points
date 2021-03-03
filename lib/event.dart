@@ -37,7 +37,7 @@ class Event {
         statoEvento: json['statoEvento'],
         categoria: json['categoria'],
         indirizzo: json['indirizzo'],
-        urlToImage: json['urlToImage'] ?? 'https://via.placeholder.com/150',
+        urlToImage: json['image_url'] ?? 'https://via.placeholder.com/150',
         //Constants.NEWS_PLACEHOLDER_IMAGE_ASSET_URL,
         civicPoints: 20);
   }
