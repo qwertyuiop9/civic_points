@@ -220,7 +220,7 @@ class MyCustomFormState extends State<createEventForm> {
       }
     }
       formWidget.add(new RaisedButton(
-          color: Colors.blue,
+          color: Colors.blueGrey,
           textColor: Colors.white,
           child: new Text('Invia'),
           onPressed: eventCreate));

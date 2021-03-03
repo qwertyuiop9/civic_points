@@ -30,7 +30,7 @@ class createdEvent extends StatelessWidget {
                 },
                 child: Text("Homepage"),
                 textColor: Colors.white,
-                color: Colors.blue,
+                color: Colors.blueGrey,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),

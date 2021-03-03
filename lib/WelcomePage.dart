@@ -36,7 +36,7 @@ class WelcomePage extends StatelessWidget {
                   name,
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.deepPurple,
+                      color: Colors.blueGrey,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 20),
@@ -48,7 +48,7 @@ class WelcomePage extends StatelessWidget {
                   email,
                   style: TextStyle(
                       fontSize: 20,
-                      color: Colors.deepPurple,
+                      color: Colors.blueGrey,
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 40),

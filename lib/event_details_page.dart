@@ -60,11 +60,13 @@ class DetailedEvent extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                   child: SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
+                    child: RaisedButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
                       child: Text('Pagina precedente'),
+                      color: Colors.blueGrey,
+                      textColor: Colors.white,
                     ),
                   ),
                 ),
