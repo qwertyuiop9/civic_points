@@ -1,6 +1,6 @@
 import 'package:civic_points/WelcomePage.dart';
-import 'package:civic_points/home_view.dart';
 import 'package:flutter/material.dart';
+import 'package:civic_points/event_create.dart';
 
 
 class createdEvent extends StatelessWidget {
@@ -43,6 +43,6 @@ class createdEvent extends StatelessWidget {
     );
   }
   Future navigateToEventListPage(context) async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => EventListPage()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage()));
   }
 }

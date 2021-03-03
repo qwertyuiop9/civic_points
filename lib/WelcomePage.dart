@@ -1,4 +1,5 @@
-import 'package:civic_points/home_view.dart';
+import 'package:civic_points/EventListState.dart';
+import 'package:civic_points/event_create.dart';
 import 'package:flutter/material.dart';
 import 'package:civic_points/login.dart';
 import 'package:civic_points/sign_in.dart';
@@ -66,6 +67,20 @@ class WelcomePage extends StatelessWidget {
               SizedBox(height: 40),
               RaisedButton(
                 onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => createEvent()));
+                },
+                child: Text("Crea evento"),
+                textColor: Colors.white,
+                color: Colors.blueGrey,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                elevation: 5,
+              ),
+              SizedBox(height: 40),
+              RaisedButton(
+                onPressed: () {
                   navigateToEventListPage(context);
                 },
                 child: Text("Eventi disponibili"),
@@ -83,6 +98,6 @@ class WelcomePage extends StatelessWidget {
     );
   }
   Future navigateToEventListPage(context) async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => EventListPage()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => EventsList()));
   }
 }
