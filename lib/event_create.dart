@@ -5,6 +5,7 @@ import 'package:quiver/strings.dart';
 import 'Event.dart';
 import 'package:date_field/date_field.dart';
 
+//Screen for event data entry
 class createEvent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class createEvent extends StatelessWidget {
   }
 }
 
-// Create a Form widget.
+// Create Form widget.
 class createEventForm extends StatefulWidget {
   @override
   MyCustomFormState createState() {
@@ -24,7 +25,7 @@ class createEventForm extends StatefulWidget {
   }
 }
 
-//Creo una classe per le categorie dell'evento, necessaria per il corretto funzionamento del DropdownButton
+//Create class for event categories. Necessary for DropdownButton correct operation.
 class Categoria {
   const Categoria(this.name);
   final String name;
@@ -39,7 +40,7 @@ class MyCustomFormState extends State<createEventForm> {
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
-  //Dichiaro le variabili per l'inserimento dell'evento
+  //Variables for event entry
   String titolo = '';
   String descrizione = '';
   String indirizzo = '';
@@ -48,7 +49,7 @@ class MyCustomFormState extends State<createEventForm> {
   String image_url = '';
   int timestamp;
   Categoria categoriaSelezionata;
-  //Aggiungere nella seguente lista le categorie
+  //Add to following list the categories
   List<Categoria> categorie = <Categoria>[Categoria('Sport'), Categoria('Cultura'), Categoria('Spettacolo')];
   bool _termsChecked = true;
 

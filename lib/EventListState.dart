@@ -104,7 +104,7 @@ class EventsListState extends State<EventsList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Events'),
+          title: Text('Eventi'),
         ),
         body: ListView.builder(
           itemCount: _eventDetails.length,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:civic_points/login.dart';
 import 'package:civic_points/sign_in.dart';
 
+//Main screen app
 class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

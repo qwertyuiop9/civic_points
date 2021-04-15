@@ -2,11 +2,13 @@ import 'package:civic_points/WelcomePage.dart';
 import 'package:civic_points/sign_in.dart';
 import 'package:flutter/material.dart';
 
+// Define LoginPage
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
+// Define State of LoginPage
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  // Button SignIn
   Widget _signInButton() {
     return OutlineButton(
       splashColor: Colors.grey,

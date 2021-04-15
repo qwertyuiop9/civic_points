@@ -2,7 +2,7 @@ import 'package:civic_points/WelcomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:civic_points/event_create.dart';
 
-
+//Screen to confirm event creation
 class createdEvent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
