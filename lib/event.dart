@@ -51,4 +51,14 @@ class Event {
           return list.map((model) => Event.fromJson(model)).toList();
         });
   }
+
+  static Resource<List<Event>> get search {
+    return Resource(
+        url: Constants.HEADLINE_SEARCH_URL,
+        parse: (response) {
+          final result = json.decode(response.body);
+          Iterable list = result;
+          return list.map((model) => Event.fromJson(model)).toList();
+        });
+  }
 }

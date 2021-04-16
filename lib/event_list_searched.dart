@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 
 import 'event.dart';
 
-class EventsListState extends State<EventsList> {
+class EventsListStateSearch extends State<EventsList> {
   List<Event> _eventDetails = [];
 
   @override
@@ -16,9 +16,9 @@ class EventsListState extends State<EventsList> {
   }
 
   void _populateNewsArticles() {
-    Webservice().load(Event.all).then((event) => {
-          setState(() => {_eventDetails = event})
-        });
+    Webservice().load(Event.search).then((event) => {
+      setState(() => {_eventDetails = event})
+    });
   }
 
   Widget _buildItemsForListView(BuildContext context, int index) {
@@ -66,7 +66,7 @@ class EventsListState extends State<EventsList> {
                     ),
                     Spacer(),
                     Text(
-                        /*DateFormat('dd/MM/yyyy')
+                      /*DateFormat('dd/MM/yyyy')
                         .format(event.data)
                         .toString())
                         */
@@ -88,8 +88,8 @@ class EventsListState extends State<EventsList> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => DetailedEvent(
-                                event: _eventDetails[index],
-                              )),
+                            event: _eventDetails[index],
+                          )),
                     );
                   },
                 ),
@@ -110,23 +110,23 @@ class EventsListState extends State<EventsList> {
         body: new Column(
           children: <Widget>[
             new RaisedButton(
-                  onPressed: () {
-                    Navigator.push(
+              onPressed: () {
+                Navigator.push(
                     context, MaterialPageRoute(builder: (context) => searchEvent()));
-                  },
-                  child: Text("Cerca eventi"),
-                  textColor: Colors.white,
-                  color: Colors.blueGrey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  elevation: 5,
+              },
+              child: Text("Cerca eventi"),
+              textColor: Colors.white,
+              color: Colors.blueGrey,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              elevation: 5,
             ),
             new Expanded(
                 child: new ListView.builder
                   (
-                    itemCount: _eventDetails.length,
-                    itemBuilder: _buildItemsForListView,
+                  itemCount: _eventDetails.length,
+                  itemBuilder: _buildItemsForListView,
                 )
             )
           ],
@@ -137,5 +137,5 @@ class EventsListState extends State<EventsList> {
 
 class EventsList extends StatefulWidget {
   @override
-  createState() => EventsListState();
+  createState() => EventsListStateSearch();
 }
