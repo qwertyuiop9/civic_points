@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'ProjectOptionsCivicPoints.dart';
 
+//Main screen app
 class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
