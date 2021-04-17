@@ -1,9 +1,12 @@
 import 'package:civic_points/event_created.dart';
 import 'package:flutter/services.dart';
+import 'package:civic_points/webservice.dart';
+import 'package:civic_points/event.dart';
+import 'package:civic_points/event_list_searched.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:quiver/strings.dart';
-import 'Event.dart';
+import 'dart:convert';
 import 'package:date_field/date_field.dart';
 
 class searchEvent extends StatelessWidget {
@@ -49,9 +52,11 @@ class MyCustomFormState extends State<createEventSearchForm> {
   String comune = '';
   Categoria categoriaSelezionata_1;
   Categoria categoriaSelezionata_2;
+  var categorieArray = [];
   //Aggiungere nella seguente lista le categorie
   List<Categoria> categorie = <Categoria>[Categoria('Sport'), Categoria('Cultura'), Categoria('Spettacolo')];
   bool _termsChecked = true;
+  List<Event> eventDetails = [];
 
 
   @override
@@ -169,39 +174,32 @@ class MyCustomFormState extends State<createEventSearchForm> {
     )
     );
 
-    void eventCreate() async {
+    void eventSearchSend() async {
       if (_formKey.currentState.validate() && _termsChecked) {
         _formKey.currentState.save();
-        var headers = {'Content-Type': 'application/json'};
-        var request = http.Request(
-            'POST', Uri.parse('http://ingsw2020server.herokuapp.com/events/search'));
-        request.body = '''{
-                    "titoloRicercato": "${titolo}",
-                    "categoria_1": "${categoriaSelezionata_1.name}",
-                    "categoria_2": "${categoriaSelezionata_1.name}",
-                    "date_from": "${date_to}"
-                    "date_to": "${date_from}"
-                    "comune": "${comune}",
-                  }''';
-        request.headers.addAll(headers);
+        categorieArray = [categoriaSelezionata_1.name,categoriaSelezionata_2.name];
+        var queryParameters = {
+          'title': "${titolo}",
+          'category': "${categorieArray}",
+          'date_from': "${date_from}",
+          'date_to': "${date_to}",
+          'comune': "${comune}",
+        };
 
-        http.StreamedResponse response = await request.send();
+        WebserviceSearch().load(Event.search, queryParameters).then((event) => {
+          setState(() => {eventDetails = event})
+        });
 
-        if (response.statusCode == 201) {
-          print(response.statusCode);
-          print(await response.stream.bytesToString());
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => createdEvent()));
-        } else {
-          print(response.reasonPhrase);
-        }
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => EventsListSearched(eventDetails)));
       }
     }
+
     formWidget.add(new RaisedButton(
         color: Colors.blueGrey,
         textColor: Colors.white,
         child: new Text('Invia'),
-        onPressed: eventCreate));
+        onPressed: eventSearchSend));
     return formWidget;
   }
 }

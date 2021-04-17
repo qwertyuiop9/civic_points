@@ -18,3 +18,17 @@ class Webservice {
     }
   }
 }
+
+class WebserviceSearch {
+  Future<T> load<T>(Resource<T> resource, Map<String, String> queryParameters) async {
+    var url = Uri.http(
+        resource.url, queryParameters);
+    var response = http.get(url);
+
+    if (response.statusCode == 200) {
+      return resource.parse(response);
+    } else {
+      throw Exception('Failed to load data!');
+    }
+  }
+}

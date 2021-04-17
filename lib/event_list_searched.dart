@@ -1,3 +1,4 @@
+import 'package:civic_points/Event.dart';
 import 'package:civic_points/event_details_page.dart';
 import 'package:civic_points/event_search.dart';
 import 'package:civic_points/webservice.dart';
@@ -6,23 +7,12 @@ import 'package:flutter/widgets.dart';
 
 import 'event.dart';
 
-class EventsListStateSearch extends State<EventsList> {
-  List<Event> _eventDetails = [];
+class EventsListState extends State<EventsListSearched> {
 
   @override
-  void initState() {
-    super.initState();
-    _populateNewsArticles();
-  }
-
-  void _populateNewsArticles() {
-    Webservice().load(Event.search).then((event) => {
-      setState(() => {_eventDetails = event})
-    });
-  }
 
   Widget _buildItemsForListView(BuildContext context, int index) {
-    final event = _eventDetails[index];
+    final event = eventDetails[index];
     return new Container(
       child: Card(
         child: Padding(
@@ -88,7 +78,7 @@ class EventsListStateSearch extends State<EventsList> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => DetailedEvent(
-                            event: _eventDetails[index],
+                            event: eventDetails[index],
                           )),
                     );
                   },
@@ -125,7 +115,7 @@ class EventsListStateSearch extends State<EventsList> {
             new Expanded(
                 child: new ListView.builder
                   (
-                  itemCount: _eventDetails.length,
+                  itemCount: eventDetails.length,
                   itemBuilder: _buildItemsForListView,
                 )
             )
@@ -135,7 +125,10 @@ class EventsListStateSearch extends State<EventsList> {
   }
 }
 
-class EventsList extends StatefulWidget {
+class EventsListSearched extends StatefulWidget {
+
+  EventsListSearched(List<Event> eventDetails);
+
   @override
-  createState() => EventsListStateSearch();
+  createState() => EventsListState();
 }
