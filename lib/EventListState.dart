@@ -108,7 +108,7 @@ class EventsListState extends State<EventsList> {
   }
 
   Icon cusIcon = Icon(Icons.search);
-  Widget cusSearchBar = Text('Event List');
+  Widget cusSearchBar = Text('Lista eventi');
   TextEditingController titleSearchController = new TextEditingController();
 
   @override
@@ -139,14 +139,16 @@ class EventsListState extends State<EventsList> {
                           print('SUBMITTED');
                           List<Event> searchedEventList =
                               await searchEventsByTitle(text);
-                          setState(() {
-                            this._eventDetails = searchedEventList;
-                          });
+                          if (searchedEventList.length!=0) {
+                            setState(() {
+                              this._eventDetails = searchedEventList;
+                            });
+                          }
                         },
                       );
                     } else {
                       this.cusIcon = Icon(Icons.search);
-                      this.cusSearchBar = Text('Eventi');
+                      this.cusSearchBar = Text('Lista eventi ricercati');
                     }
                   });
                 }),
@@ -162,7 +164,7 @@ class EventsListState extends State<EventsList> {
   void updateEventListBySearch(String text) async {
     this._eventDetails = await searchEventsByTitle(text);
     print("\n\n");
-    print("Lista Eventi attuale");
+    print("Lista eventi attuale");
     print(this._eventDetails);
   }
 
@@ -183,8 +185,9 @@ class EventsListState extends State<EventsList> {
     print(response.data);
     print('\FINE DATI OTTENUTI\n');
     List<Event> retrievedEvents =
-        List<Event>.from(response.data.map((model) => Event.fromJson(model)));
+    List<Event>.from(response.data.map((model) => Event.fromJson(model)));
     print(retrievedEvents);
+    print(response.statusCode);
     return retrievedEvents;
   }
 }
