@@ -1,5 +1,5 @@
-import 'package:civic_points/event_details_page.dart';
-import 'package:civic_points/webservice.dart';
+import 'package:civic_points/eventDetailsPage.dart';
+import 'package:civic_points/webService.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -108,7 +108,7 @@ class EventsListState extends State<EventsList> {
   }
 
   Icon cusIcon = Icon(Icons.search);
-  Widget cusSearchBar = Text('Event List');
+  Widget cusSearchBar = Text('Eventi disponibili');
   TextEditingController titleSearchController = new TextEditingController();
 
   @override
@@ -143,6 +143,11 @@ class EventsListState extends State<EventsList> {
                             searchedEventList = [
                               Event.getNullPlaceholderEvent()
                             ];
+                            setState(() {
+                              this._eventDetails = searchedEventList;
+                            });
+                          }
+                          else {
                             setState(() {
                               this._eventDetails = searchedEventList;
                             });

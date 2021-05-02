@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:civic_points/constants.dart';
-import 'package:civic_points/webservice.dart';
+import 'package:civic_points/webService.dart';
 
 class Event {
   final String id;

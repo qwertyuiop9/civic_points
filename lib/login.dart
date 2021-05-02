@@ -1,5 +1,5 @@
-import 'package:civic_points/WelcomePage.dart';
-import 'package:civic_points/sign_in.dart';
+import 'package:civic_points/WelcomeScreen.dart';
+import 'package:civic_points/signIn.dart';
 import 'package:flutter/material.dart';
 
 // Define LoginPage
@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
-                  return WelcomePage();
+                  return WelcomeScreen();
                 },
               ),
             );

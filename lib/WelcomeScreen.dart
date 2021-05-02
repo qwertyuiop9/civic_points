@@ -1,13 +1,13 @@
 import 'package:civic_points/EventListState.dart';
-import 'package:civic_points/event_create.dart';
+import 'package:civic_points/eventCreate.dart';
 import 'package:civic_points/login.dart';
-import 'package:civic_points/sign_in.dart';
+import 'package:civic_points/signIn.dart';
 import 'package:flutter/material.dart';
 
 import 'ProjectOptionsCivicPoints.dart';
 
 //Main screen app
-class WelcomePage extends StatelessWidget {
+class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

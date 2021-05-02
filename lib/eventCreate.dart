@@ -1,4 +1,4 @@
-import 'package:civic_points/event_created.dart';
+import 'package:civic_points/eventCreated.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:quiver/strings.dart';

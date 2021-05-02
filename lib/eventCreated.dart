@@ -1,6 +1,6 @@
-import 'package:civic_points/WelcomePage.dart';
+import 'package:civic_points/WelcomeScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:civic_points/event_create.dart';
+import 'package:civic_points/eventCreate.dart';
 
 //Screen to confirm event creation
 class createdEvent extends StatelessWidget {
@@ -26,9 +26,9 @@ class createdEvent extends StatelessWidget {
               RaisedButton(
                 onPressed: () {
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => WelcomePage()));
+                      context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
                 },
-                child: Text("Homepage"),
+                child: Text("Home"),
                 textColor: Colors.white,
                 color: Colors.blueGrey,
                 shape: RoundedRectangleBorder(
@@ -43,6 +43,6 @@ class createdEvent extends StatelessWidget {
     );
   }
   Future navigateToEventListPage(context) async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
   }
 }
