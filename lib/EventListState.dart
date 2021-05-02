@@ -142,9 +142,14 @@ class EventsListState extends State<EventsList> {
                           print('SUBMITTED');
                           List<Event> searchedEventList =
                               await searchEventsByTitle(text);
-                          setState(() {
-                            this._eventDetails = searchedEventList;
-                          });
+                          if (searchedEventList.length < 1) {
+                            searchedEventList = [
+                              Event.getNullPlaceholderEvent()
+                            ];
+                            setState(() {
+                              this._eventDetails = searchedEventList;
+                            });
+                          }
                         },
                       );
                     } else {

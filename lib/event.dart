@@ -72,4 +72,19 @@ class Event {
           return list.map((model) => Event.fromJson(model)).toList();
         });
   }
+
+  static Event getNullPlaceholderEvent() {
+    return new Event(
+        id: '-1',
+        comune: '/',
+        titoloEvento: 'Nessun evento trovato',
+        descrizione: 'Suggerimento: provare a ricercare con termini diversi...',
+        data: '/',
+        urlToImage:
+            'https://previews.123rf.com/images/vectorknight/vectorknight1807/vectorknight180700074/105231216-upset-magnifying-glass-cute-not-found-symbol-and-unsuccessful-search-zoom-for-404-icon-no-suitable-r.jpg',
+        civicPoints: 0,
+        statoEvento: "/",
+        categoria: "/",
+        indirizzo: "/");
+  }
 }
