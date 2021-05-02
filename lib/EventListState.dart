@@ -1,5 +1,6 @@
 import 'package:civic_points/event_details_page.dart';
 import 'package:civic_points/webservice.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -8,55 +9,22 @@ import 'event.dart';
 class EventsListState extends State<EventsList> {
   List<Event> _eventDetails = [];
   var title_search = "";
-  Widget search_box = null;
-  int state = 0;
   final titleController = TextEditingController();
-  var searchOn = true;
+  var searchOn = false;
+  var vertical_search_box_size = 50.0;
+  var horizontal_search_box_size = 50.0;
 
   @override
   void initState() {
     super.initState();
     _populateNewsArticles();
     searchOn = true;
-    search_box = _getSearchBox();
   }
 
   void _populateNewsArticles() {
     Webservice().load(Event.all).then((event) => {
           setState(() => {_eventDetails = event})
         });
-  }
-
-  // Questo metodo deve restituire il risultato della ricerca degli eventi dove il parametro titolo è nella variabile "titolo_da_cercare"
-  void _updateEventListBySearch() {
-    var titolo_da_cercare = title_search;
-    Webservice().load(Event.eventsBySearch).then((event) => {
-          setState(() => {_eventDetails = event})
-        });
-  }
-
-  Widget _getSearchBox() {
-    if (searchOn) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
-        child: Container(
-          child: TextField(
-            onSubmitted: (text) {
-              print(text);
-              this.title_search = text.trim();
-              _updateEventListBySearch();
-            },
-            cursorColor: Colors.black54,
-            controller: titleController,
-          ),
-        ),
-      );
-    } else {
-      return Container(
-        width: 0,
-        height: 0,
-      );
-    }
   }
 
   Widget _buildItemsForListView(BuildContext context, int index) {
@@ -139,38 +107,88 @@ class EventsListState extends State<EventsList> {
     );
   }
 
+  Icon cusIcon = Icon(Icons.search);
+  Widget cusSearchBar = Text('Event List');
+  TextEditingController titleSearchController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Eventi disponibili'),
+          title: cusSearchBar,
+          leading: IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.menu),
+          ),
           actions: <Widget>[
             IconButton(
-              onPressed: () {
-                if (searchOn) {
-                  searchOn = false;
+                icon: cusIcon,
+                onPressed: () {
                   setState(() {
-                    search_box = _getSearchBox();
+                    if (this.cusIcon.icon == Icons.search) {
+                      this.cusIcon = Icon(Icons.cancel);
+                      this.cusSearchBar = TextField(
+                        textInputAction: TextInputAction.go,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Search term',
+                        ),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                        ),
+                        controller: titleSearchController,
+                        onSubmitted: (String text) async {
+                          print('SUBMITTED');
+                          List<Event> searchedEventList =
+                              await searchEventsByTitle(text);
+                          setState(() {
+                            this._eventDetails = searchedEventList;
+                          });
+                        },
+                      );
+                    } else {
+                      this.cusIcon = Icon(Icons.search);
+                      this.cusSearchBar = Text('Event List');
+                    }
                   });
-                } else {
-                  searchOn = true;
-                  setState(() {
-                    search_box = _getSearchBox();
-                  });
-                }
-              },
-              icon: Icon(Icons.search),
-            ),
+                }),
+            IconButton(icon: Icon(Icons.more_vert), onPressed: () {}),
           ],
-          bottom: PreferredSize(
-            preferredSize: Size(50, 50),
-            child: search_box,
-          ),
         ),
         body: ListView.builder(
           itemCount: _eventDetails.length,
           itemBuilder: _buildItemsForListView,
         ));
+  }
+
+  void updateEventListBySearch(String text) async {
+    this._eventDetails = await searchEventsByTitle(text);
+    print("\n\n");
+    print("Lista Eventi attuale");
+    print(this._eventDetails);
+  }
+
+  final Dio _dio;
+
+  EventsListState()
+      : _dio = Dio(BaseOptions(
+          baseUrl: 'https://ingsw2020server.herokuapp.com/events/',
+          headers: {
+            'Accept': 'application/json',
+          },
+        ));
+
+  Future<List> searchEventsByTitle(String title) async {
+    final response =
+        await _dio.get('search', queryParameters: {'title': title});
+    print('\nINIZIO DATI OTTENUTI\n');
+    print(response.data);
+    print('\FINE DATI OTTENUTI\n');
+    List<Event> retrievedEvents =
+        List<Event>.from(response.data.map((model) => Event.fromJson(model)));
+    print(retrievedEvents);
+    return retrievedEvents;
   }
 }
 
