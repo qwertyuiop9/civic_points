@@ -97,6 +97,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                   elevation: 5,
                 ),
+                SizedBox(height: 40),
                 RaisedButton(
                   onPressed: () {
                     navigateToCivicPointsProjects(context);
