@@ -108,7 +108,7 @@ class EventsListState extends State<EventsList> {
   }
 
   Icon cusIcon = Icon(Icons.search);
-  Widget cusSearchBar = Text('Lista eventi');
+  Widget cusSearchBar = Text('Event List');
   TextEditingController titleSearchController = new TextEditingController();
 
   @override
@@ -116,7 +116,10 @@ class EventsListState extends State<EventsList> {
     return Scaffold(
         appBar: AppBar(
           title: cusSearchBar,
-
+          leading: IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.menu),
+          ),
           actions: <Widget>[
             IconButton(
                 icon: cusIcon,
@@ -139,7 +142,10 @@ class EventsListState extends State<EventsList> {
                           print('SUBMITTED');
                           List<Event> searchedEventList =
                               await searchEventsByTitle(text);
-                          if (searchedEventList.length!=0) {
+                          if (searchedEventList.length < 1) {
+                            searchedEventList = [
+                              Event.getNullPlaceholderEvent()
+                            ];
                             setState(() {
                               this._eventDetails = searchedEventList;
                             });
@@ -148,11 +154,11 @@ class EventsListState extends State<EventsList> {
                       );
                     } else {
                       this.cusIcon = Icon(Icons.search);
-                      this.cusSearchBar = Text('Lista eventi ricercati');
+                      this.cusSearchBar = Text('Event List');
                     }
                   });
                 }),
-
+            IconButton(icon: Icon(Icons.more_vert), onPressed: () {}),
           ],
         ),
         body: ListView.builder(
@@ -164,7 +170,7 @@ class EventsListState extends State<EventsList> {
   void updateEventListBySearch(String text) async {
     this._eventDetails = await searchEventsByTitle(text);
     print("\n\n");
-    print("Lista eventi attuale");
+    print("Lista Eventi attuale");
     print(this._eventDetails);
   }
 
@@ -185,9 +191,8 @@ class EventsListState extends State<EventsList> {
     print(response.data);
     print('\FINE DATI OTTENUTI\n');
     List<Event> retrievedEvents =
-    List<Event>.from(response.data.map((model) => Event.fromJson(model)));
+        List<Event>.from(response.data.map((model) => Event.fromJson(model)));
     print(retrievedEvents);
-    print(response.statusCode);
     return retrievedEvents;
   }
 }
