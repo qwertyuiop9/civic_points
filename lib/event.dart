@@ -51,4 +51,25 @@ class Event {
           return list.map((model) => Event.fromJson(model)).toList();
         });
   }
+
+  static Resource<List<Event>> get eventsBySearch {
+    return Resource(
+        url: Constants.HEADLINE_NEWS_URL,
+        parse: (response) {
+          final result = json.decode(response.body);
+          Iterable list = result;
+          return list.map((model) => Event.fromJson(model)).toList();
+        });
+  }
+
+  // Da rimpiazzare con chiamata all'oggetto Opzione di spesa
+  static Resource<List<Event>> get all_projects {
+    return Resource(
+        url: Constants.HEADLINE_BUY_OPTIONS,
+        parse: (response) {
+          final result = json.decode(response.body);
+          Iterable list = result;
+          return list.map((model) => Event.fromJson(model)).toList();
+        });
+  }
 }

@@ -15,6 +15,20 @@ class serverConnection {
     }
   }
 
+  static Future<String> getAllBuyOptions() async {
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            'https://ingsw2020server.herokuapp.com/projects/projectsList'));
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      return response.stream.bytesToString();
+    } else {
+      print(response.reasonPhrase);
+      return null;
+    }
+  }
+
   ///Funzione getEventByID, riceve [eventID] dall'utente per poi ritornare una
   ///String [returnString] con i dettagli dell'evento
   ///

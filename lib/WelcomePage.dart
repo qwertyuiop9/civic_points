@@ -1,16 +1,17 @@
 import 'package:civic_points/EventListState.dart';
 import 'package:civic_points/event_create.dart';
-import 'package:flutter/material.dart';
 import 'package:civic_points/login.dart';
 import 'package:civic_points/sign_in.dart';
+import 'package:flutter/material.dart';
+
+import 'ProjectOptionsCivicPoints.dart';
 
 //Main screen app
 class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.fromLTRB(16, 16, 0, 0),
@@ -25,10 +26,10 @@ class WelcomePage extends StatelessWidget {
                   backgroundImage: NetworkImage(
                     imageUrl,
                   ),
-                  radius: 60,
+                  radius: 48,
                   backgroundColor: Colors.transparent,
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 48),
                 Text(
                   'Utente',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -56,7 +57,10 @@ class WelcomePage extends StatelessWidget {
                 RaisedButton(
                   onPressed: () {
                     signOutGoogle();
-                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) {return LoginPage();}), ModalRoute.withName('/'));
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) {
+                      return LoginPage();
+                    }), ModalRoute.withName('/'));
                   },
                   child: Text("Sign Out"),
                   textColor: Colors.white,
@@ -69,8 +73,8 @@ class WelcomePage extends StatelessWidget {
                 SizedBox(height: 40),
                 RaisedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => createEvent()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => createEvent()));
                   },
                   child: Text("Crea evento"),
                   textColor: Colors.white,
@@ -92,6 +96,18 @@ class WelcomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   elevation: 5,
+                ),
+                RaisedButton(
+                  onPressed: () {
+                    navigateToCivicPointsProjects(context);
+                  },
+                  child: Text("Opzioni di spesa disponibili"),
+                  textColor: Colors.white,
+                  color: Colors.blueGrey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  elevation: 5,
                 )
               ],
             ),
@@ -100,7 +116,14 @@ class WelcomePage extends StatelessWidget {
       ),
     );
   }
+
   Future navigateToEventListPage(context) async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => EventsList()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => EventsList()));
+  }
+
+  Future navigateToCivicPointsProjects(context) async {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ProjectList()));
   }
 }
