@@ -116,10 +116,7 @@ class EventsListState extends State<EventsList> {
     return Scaffold(
         appBar: AppBar(
           title: cusSearchBar,
-          leading: IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.menu),
-          ),
+
           actions: <Widget>[
             IconButton(
                 icon: cusIcon,
@@ -154,11 +151,11 @@ class EventsListState extends State<EventsList> {
                       );
                     } else {
                       this.cusIcon = Icon(Icons.search);
-                      this.cusSearchBar = Text('Event List');
+                      this.cusSearchBar = Text('Eventi ricercati');
                     }
                   });
                 }),
-            IconButton(icon: Icon(Icons.more_vert), onPressed: () {}),
+
           ],
         ),
         body: ListView.builder(
