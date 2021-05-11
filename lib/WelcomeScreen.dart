@@ -3,11 +3,12 @@ import 'package:civic_points/eventCreate.dart';
 import 'package:civic_points/login.dart';
 import 'package:civic_points/signIn.dart';
 import 'package:flutter/material.dart';
+import 'package:civic_points/bloc.navigation_bloc/navigation_bloc.dart';
 
 import 'ProjectOptionsCivicPoints.dart';
 
 //Main screen app
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatelessWidget with NavigationStates {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

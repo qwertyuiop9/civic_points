@@ -1,5 +1,6 @@
 import 'package:civic_points/WelcomeScreen.dart';
 import 'package:civic_points/signIn.dart';
+import 'package:civic_points/sidebar/sidebar_layout.dart';
 import 'package:flutter/material.dart';
 
 // Define LoginPage
@@ -40,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
-                  return WelcomeScreen();
+                  return SideBarLayout();
                 },
               ),
             );
