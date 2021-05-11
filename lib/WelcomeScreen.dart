@@ -13,7 +13,8 @@ class WelcomeScreen extends StatelessWidget with NavigationStates {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
+        //centerTitle: true,
+        titleSpacing: 50.0,
         title: new Text("Home"),
         automaticallyImplyLeading: false,
       ),
@@ -79,7 +80,6 @@ class WelcomeScreen extends StatelessWidget with NavigationStates {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => EventsList()));
   }
-
   Future navigateToCivicPointsProjects(context) async {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => ProjectList()));

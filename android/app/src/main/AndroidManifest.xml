@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="andreavendrame.com.civic_points">
    <application
-        android:label="civic_points"
+        android:label="Civic Points"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

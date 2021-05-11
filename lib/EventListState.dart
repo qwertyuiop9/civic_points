@@ -94,8 +94,8 @@ class EventsListState extends State<EventsList> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => DetailedEvent(
-                                event: _eventDetails[index],
-                              )),
+                            event: _eventDetails[index],
+                          )),
                     );
                   },
                 ),
@@ -172,7 +172,7 @@ class EventsListState extends State<EventsList> {
   void updateEventListBySearch(String text) async {
     this._eventDetails = await searchEventsByTitle(text);
     print("\n\n");
-    print("Lista Eventi attuale");
+    print("Lista eventi attuale");
     print(this._eventDetails);
   }
 
