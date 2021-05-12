@@ -46,7 +46,7 @@ class citySelectionState extends State<citySelection> {
   Border.all(color: Colors.grey.shade300, width: 1)),
 
   ///Default Country
-  defaultCountry: DefaultCountry.India,
+  defaultCountry: DefaultCountry.Italy,
 
   ///selected item style [OPTIONAL PARAMETER]
   selectedItemStyle: TextStyle(
