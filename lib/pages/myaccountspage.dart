@@ -4,7 +4,11 @@ import 'package:civic_points/login.dart';
 import 'package:civic_points/signIn.dart';
 import '../bloc.navigation_bloc/navigation_bloc.dart';
 
-class MyAccountsPage extends StatelessWidget with NavigationStates {
+class MyAccountsPageList extends State<MyAccountsPage>{
+  final Future<String> _calculation = Future<String>.delayed(
+    const Duration(seconds: 2),
+        () => 'Data Loaded',
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,4 +80,9 @@ class MyAccountsPage extends StatelessWidget with NavigationStates {
       ),
     );
   }
+}
+
+class MyAccountsPage extends StatefulWidget with NavigationStates {
+  @override
+  createState() => MyAccountsPageList();
 }
