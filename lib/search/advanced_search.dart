@@ -1,0 +1,204 @@
+import 'package:civic_points/search/search.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+class AdvancedSearch extends StatefulWidget {
+  final SearchParams searchParams;
+
+  const AdvancedSearch({Key key, this.searchParams}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _AdvancedSearchState(searchParams);
+}
+
+class _AdvancedSearchState extends State<AdvancedSearch> {
+  final titleController = TextEditingController();
+  final SearchParams searchParams;
+  String start_date = '';
+  String end_date = '';
+  List<String> _categories = [];
+  // Creare una lista di booleani pari al numero di categorie disponibili alla scelta
+  List<bool> _is_category_active = [];
+
+  // Costruttore base
+  _AdvancedSearchState(this.searchParams);
+
+  @override
+  void initState() {
+    super.initState();
+    this._categories = _getUserCategories();
+    // Creo una lista lunga quanto il numero di categorie disponibili e la riempio di valori falsi al fine di rappresentare la selezione delle checkbox
+    this._is_category_active = List.filled(this._categories.length, false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Ricerca avanzata"),
+      ),
+      body: Center(
+        child: Container(
+          width: double.infinity,
+          color: Colors.white,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16.0, 32, 16, 0),
+                child: Text(
+                  'Titolo evento',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextField(
+                  textInputAction: TextInputAction.go,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Titolo: ',
+                  ),
+                  style: TextStyle(color: Colors.black, fontSize: 16.0),
+                  controller: this.titleController,
+                  onSubmitted: (String text) {
+                    searchParams.title_keyword = text;
+                  },
+                  cursorColor: Colors.blue,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Ricerca per data',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16.0, 0, 16, 0),
+                child: Row(
+                  children: [
+                    ElevatedButton(
+                        child: Text('Inserisci data iniziale'),
+                        onPressed: () {
+                          showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2001),
+                            lastDate: DateTime(2022),
+                          ).then((pickedDate) {
+                            print(pickedDate);
+                            this.searchParams.start_date = pickedDate;
+                            setState(() {
+                              this.start_date =
+                                  '${pickedDate.day.toString()}/${pickedDate.month.toString()}/${pickedDate.year.toString()}';
+                            });
+                          });
+                        }),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text('$start_date'),
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16.0, 0, 16, 16),
+                child: Row(
+                  children: [
+                    ElevatedButton(
+                        child: Text('Inserisci data finale'),
+                        onPressed: () {
+                          showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2001),
+                            lastDate: DateTime(2022),
+                          ).then((pickedDate) {
+                            print(pickedDate);
+                            this.searchParams.end_date = pickedDate;
+                            setState(() {
+                              this.end_date =
+                                  '${pickedDate.day.toString()}/${pickedDate.month.toString()}/${pickedDate.year.toString()}';
+                            });
+                          });
+                        }),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text('$end_date'),
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Seleziona categorie',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                    color: Color(0xfffbfaff),
+                    child: ListView.builder(
+                      itemCount: _categories.length,
+                      itemBuilder: _buildCategoryItemForListView,
+                    )),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Chiamata al server
+                  },
+                  child: Text(
+                    'Avvia ricerca',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCategoryItemForListView(BuildContext context, int index) {
+    final String category = _categories[index];
+    return CheckboxListTile(
+      title: Text(category),
+      value: _is_category_active[index],
+      onChanged: (bool value) {
+        setState(() {
+          _is_category_active[index] = value;
+        });
+      },
+    );
+  }
+
+  // Chiamata http che restituisce una lista di categorie relative all'utente in base al suo profilo
+  List<String> _getUserCategories() {
+    /** Aggiungere l'implementazione**/
+    return [
+      "HardCoded",
+      "Cinema",
+      "Spettacolo",
+      "Sport",
+      "Test 1",
+      "Test 2",
+      "Outfit"
+    ];
+  }
+}
