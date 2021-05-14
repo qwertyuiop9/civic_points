@@ -1,9 +1,6 @@
-//import 'package:civic_points/EventListState.dart';
 import 'package:civic_points/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import 'EventListState.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Civic Points',
       theme: ThemeData(
         // This is the theme of your application.
         //

@@ -1,4 +1,6 @@
 import 'package:civic_points/eventDetailsPage.dart';
+import 'package:civic_points/search/advanced_search.dart';
+import 'package:civic_points/search/search.dart';
 import 'package:civic_points/webService.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -94,8 +96,8 @@ class EventsListState extends State<EventsList> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => DetailedEvent(
-                            event: _eventDetails[index],
-                          )),
+                                event: _eventDetails[index],
+                              )),
                     );
                   },
                 ),
@@ -116,7 +118,6 @@ class EventsListState extends State<EventsList> {
     return Scaffold(
         appBar: AppBar(
           title: cusSearchBar,
-
           actions: <Widget>[
             IconButton(
                 icon: cusIcon,
@@ -146,8 +147,7 @@ class EventsListState extends State<EventsList> {
                             setState(() {
                               this._eventDetails = searchedEventList;
                             });
-                          }
-                          else {
+                          } else {
                             setState(() {
                               this._eventDetails = searchedEventList;
                             });
@@ -160,8 +160,22 @@ class EventsListState extends State<EventsList> {
                     }
                   });
                 }),
-
           ],
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AdvancedSearch(
+                        searchParams:
+                            new SearchParams(this.title_search, null, null, []),
+                      )),
+            );
+          },
+          label: const Text('Cerca'),
+          icon: const Icon(Icons.search),
+          backgroundColor: Colors.blue,
         ),
         body: ListView.builder(
           itemCount: _eventDetails.length,
