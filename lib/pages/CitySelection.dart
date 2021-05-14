@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:civic_points/pages/profileParameters.dart';
 import 'package:http/http.dart' as http;
 import 'package:civic_points/pages/myaccountspage.dart';
+import 'package:civic_points/signIn.dart';
+import 'package:civic_points/idToken.dart';
 
 
 class citySelectionState extends State<citySelection> {
@@ -18,15 +20,17 @@ class citySelectionState extends State<citySelection> {
   bool boolInserito = false;
   bool boolRitorna = false;
   bool boolAggiungi = false;
+  bool boolSend = false;
 
   void sendComune() async {
-    var boolInserito = false;
-    var headers = {'Content-Type': 'application/json'};
+    var headers = {'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${token}'};
     var request = http.Request(
-        'POST', Uri.parse('http://ingsw2020server.herokuapp.com/.....'));
+        'PATCH', Uri.parse('http://ingsw2020server.herokuapp.com/users/me/comuni'));
     request.body = '''{
-                  "comune": "${comune}",
-                  "indice": "${profileParameters.indice}
+                  "diResidenza": "${boolSend}",
+                  "comuneCancella": "${profileParameters.comuneCancella}",
+                  "comuneAggiungi": "${comune}",
                 }''';
     request.headers.addAll(headers);
 
@@ -155,6 +159,7 @@ class citySelectionState extends State<citySelection> {
                             indice = profileParameters.indice;
                             if (profileParameters.modifica == 1) {
                               boolVisualizza = true;
+                              boolSend == true;
                             }
                             if (profileParameters.modifica == 2) {
                               boolRitorna = true;
@@ -188,6 +193,7 @@ class citySelectionState extends State<citySelection> {
                             boolVisualizza = false;
                             boolAggiungi = false;
                             boolRitorna = false;
+                            boolSend = false;
                           });
                         },
                         child: Text("Aggiungi comune di interesse")),

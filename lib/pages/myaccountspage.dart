@@ -4,13 +4,15 @@ import 'package:civic_points/signIn.dart';
 import 'package:civic_points/webService.dart';
 import 'package:flutter/material.dart';
 import 'package:civic_points/pages/profileParameters.dart';
-
+import 'package:civic_points/signIn.dart';
+import 'package:civic_points/idToken.dart';
 import '../bloc.navigation_bloc/navigation_bloc.dart';
+import 'package:http/http.dart' as http;
 
 class MyAccountsPageList extends State<MyAccountsPage> {
   //List<Comune> _comuni = [];
 
-  List<Comune> _comuni = [new Comune(nome: 'Udine'),new Comune(nome: 'Gorizia'),new Comune(nome: 'Trieste'),new Comune(nome: 'Pordenone')];
+  //List<Comune> _comuni = [new Comune(nome: 'Udine'),new Comune(nome: 'Gorizia'),new Comune(nome: 'Trieste'),new Comune(nome: 'Pordenone')];
 
   //List<Comune> _comuni = [new Comune(nome: 'Udine')];
 
@@ -19,6 +21,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
   int modifica;
   int indice;
   bool aggiungi = false;
+  var comuneCancella;
 
   @override
   void initState() {
@@ -39,6 +42,25 @@ class MyAccountsPageList extends State<MyAccountsPage> {
         });
   }
 
+  void deleteComune() async {
+    var headers = {'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${token}'};
+    var request = http.Request(
+        'DELETE', Uri.parse('http://ingsw2020server.herokuapp.com/users/me/comuni'));
+    request.body = '''{
+                  "comune": "${comuneCancella}",
+                }''';
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 201) {
+      print(response.statusCode);
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
   Widget _buildItemsForComuniListView(BuildContext context, int index) {
     final comune = _comuni[index + 1];
     return new Container(
@@ -71,7 +93,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                           MaterialPageRoute(
                               builder: (context) => citySelection(
                                 profileParameters:
-                                new ProfileParameters(modifica, indice, aggiungi),
+                                new ProfileParameters(modifica, indice, aggiungi, comune.nome),
                               )));
                     },
                   ),
@@ -86,6 +108,8 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     onPressed: () {
+                      comuneCancella = comune;
+                      deleteComune();
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -191,7 +215,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                           MaterialPageRoute(
                               builder: (context) => citySelection(
                                 profileParameters:
-                                new ProfileParameters(modifica, indice, aggiungi),
+                                new ProfileParameters(modifica, indice, aggiungi, null),
                               )));
                     },
                   ),
@@ -227,7 +251,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                           MaterialPageRoute(
                               builder: (context) => citySelection(
                                 profileParameters:
-                                new ProfileParameters(modifica, indice, aggiungi),
+                                new ProfileParameters(modifica, indice, aggiungi, null),
                               )));
                     },
                   ),
@@ -247,7 +271,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                           MaterialPageRoute(
                               builder: (context) => citySelection(
                                 profileParameters:
-                                new ProfileParameters(modifica, indice, aggiungi),
+                                new ProfileParameters(modifica, indice, aggiungi, null),
                               )));
                     },
                   ),
