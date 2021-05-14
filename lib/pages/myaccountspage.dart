@@ -8,7 +8,7 @@ import 'package:civic_points/comune.dart';
 
 class MyAccountsPageList extends State<MyAccountsPage>{
   ///List<Comune> _comuni = [];
-  List<Comune> _comuni = [new Comune(nome: 'Udine'), new Comune(nome: 'Gorizia'), new Comune(nome: 'Trieste'), new Comune(nome: 'Pordenone')];
+  ///List<Comune> _comuni = [new Comune(nome: 'Udine'), new Comune(nome: 'Gorizia'), new Comune(nome: 'Trieste'), new Comune(nome: 'Pordenone')];
   ///List<Comune> _comuni = [new Comune(nome: 'Udine')];
   bool boolComuneDiInteresse = false;
   bool boolComuneDiResidenza = false;
@@ -193,7 +193,7 @@ class MyAccountsPageList extends State<MyAccountsPage>{
                     shrinkWrap: true,
                     itemBuilder: _buildItemsForComuniListView,
                   ),
-                if (boolComuneDiResidenza)
+                if (boolComuneDiResidenza && !boolComuneDiInteresse)
                   SizedBox(height: 20),
                 if (boolComuneDiResidenza)
                   RaisedButton(
