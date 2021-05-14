@@ -10,14 +10,15 @@ import '../bloc.navigation_bloc/navigation_bloc.dart';
 class MyAccountsPageList extends State<MyAccountsPage> {
   //List<Comune> _comuni = [];
 
-  // List<Comune> _comuni = [new Comune(nome: 'Udine'),new Comune(nome: 'Gorizia'),new Comune(nome: 'Trieste'),new Comune(nome: 'Pordenone')];
+  List<Comune> _comuni = [new Comune(nome: 'Udine'),new Comune(nome: 'Gorizia'),new Comune(nome: 'Trieste'),new Comune(nome: 'Pordenone')];
 
-  List<Comune> _comuni = [new Comune(nome: 'Udine')];
+  //List<Comune> _comuni = [new Comune(nome: 'Udine')];
 
   bool boolComuneDiInteresse = false;
   bool boolComuneDiResidenza = false;
   int modifica;
   int indice;
+  bool aggiungi = false;
 
   @override
   void initState() {
@@ -70,7 +71,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                           MaterialPageRoute(
                               builder: (context) => citySelection(
                                 profileParameters:
-                                new ProfileParameters(modifica, indice),
+                                new ProfileParameters(modifica, indice, aggiungi),
                               )));
                     },
                   ),
@@ -184,12 +185,13 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                     ),
                     onPressed: () {
                       modifica = 1;
+                      indice = 0;
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => citySelection(
                                 profileParameters:
-                                new ProfileParameters(modifica, indice),
+                                new ProfileParameters(modifica, indice, aggiungi),
                               )));
                     },
                   ),
@@ -218,13 +220,14 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                     ),
                     onPressed: () {
                       modifica = 2;
-                      indice = 1;
+                      indice = _comuni.length+1;
+                      aggiungi = true;
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => citySelection(
                                 profileParameters:
-                                new ProfileParameters(modifica, indice),
+                                new ProfileParameters(modifica, indice, aggiungi),
                               )));
                     },
                   ),
@@ -238,12 +241,13 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                     ),
                     onPressed: () {
                       modifica = 1;
+                      indice = 0;
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => citySelection(
                                 profileParameters:
-                                new ProfileParameters(modifica, indice),
+                                new ProfileParameters(modifica, indice, aggiungi),
                               )));
                     },
                   ),

@@ -1,16 +1,49 @@
 import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:civic_points/pages/profileParameters.dart';
+import 'package:http/http.dart' as http;
+import 'package:civic_points/pages/myaccountspage.dart';
+
 
 class citySelectionState extends State<citySelection> {
   /// Variables to store country state city data in onChanged method.
   String countryValue = "";
   String stateValue = "";
   String cityValue = "";
-  String address = "";
+  String comune = "";
+  final ProfileParameters profileParameters;
+  citySelectionState(this.profileParameters);
+  int indice;
+  bool boolVisualizza = false;
+  bool boolInserito = false;
+  bool boolRitorna = false;
+  bool boolAggiungi = false;
+
+  void sendComune() async {
+    var boolInserito = false;
+    var headers = {'Content-Type': 'application/json'};
+    var request = http.Request(
+        'POST', Uri.parse('http://ingsw2020server.herokuapp.com/.....'));
+    request.body = '''{
+                  "comune": "${comune}",
+                  "indice": "${profileParameters.indice}
+                }''';
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 201) {
+      print(response.statusCode);
+      print(await response.stream.bytesToString());
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    print(profileParameters.modifica);
+    print(profileParameters.indice);
     return Scaffold(
       appBar: AppBar(),
       body: Center(
@@ -106,19 +139,74 @@ class citySelectionState extends State<citySelection> {
                     });
                   },
                 ),
-
+                if (!boolVisualizza && !boolRitorna | !boolAggiungi)
                 ///print newly selected country state and city in Text Widget
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          address = "$cityValue, $stateValue, $countryValue";
-                        });
-                      },
-                      child: Text("Conferma")),
-                ),
-                Text(address)
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: RaisedButton(
+                        textColor: Colors.white,
+                        color: Colors.blueGrey,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            comune = "$cityValue";
+                            indice = profileParameters.indice;
+                            if (profileParameters.modifica == 1) {
+                              boolVisualizza = true;
+                            }
+                            if (profileParameters.modifica == 2) {
+                              boolRitorna = true;
+                              boolAggiungi = true;
+                            }
+                            if (profileParameters.aggiungi) {
+                              boolAggiungi = true;
+                            }
+                          });
+                          sendComune();
+                        },
+                        child: Text("Conferma")),
+                  ),
+                SizedBox(height: 20),
+                if (boolVisualizza | boolRitorna | boolAggiungi)
+                  Text(comune + " inserito!"),
+
+                if (boolVisualizza | boolAggiungi | boolRitorna)
+                ///print newly selected country state and city in Text Widget
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: RaisedButton(
+                        textColor: Colors.white,
+                        color: Colors.blueGrey,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            indice = profileParameters.indice + 1;
+                            boolVisualizza = false;
+                            boolAggiungi = false;
+                            boolRitorna = false;
+                          });
+                        },
+                        child: Text("Aggiungi comune di interesse")),
+                  ),
+                  if (boolVisualizza | boolRitorna)
+                    Padding(
+                    padding: const EdgeInsets.all(16.0),
+                      child: RaisedButton(
+                          textColor: Colors.white,
+                          color: Colors.blueGrey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => MyAccountsPage()));
+                          },
+                          child: Text("Ritorna al profilo")),
+                    ),
               ],
             )),
       ),
@@ -132,5 +220,5 @@ class citySelection extends StatefulWidget {
   const citySelection({Key key, this.profileParameters}) : super(key: key);
 
   @override
-  citySelectionState createState() => citySelectionState();
+  citySelectionState createState() => citySelectionState(profileParameters);
 }
