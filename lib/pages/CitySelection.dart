@@ -1,5 +1,6 @@
 import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:civic_points/pages/profileParameters.dart';
 
 class citySelectionState extends State<citySelection> {
   /// Variables to store country state city data in onChanged method.
@@ -126,6 +127,10 @@ class citySelectionState extends State<citySelection> {
 }
 
 class citySelection extends StatefulWidget {
+  final ProfileParameters profileParameters;
+
+  const citySelection({Key key, this.profileParameters}) : super(key: key);
+
   @override
   citySelectionState createState() => citySelectionState();
 }

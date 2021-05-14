@@ -3,6 +3,7 @@ import 'package:civic_points/pages/CitySelection.dart';
 import 'package:civic_points/signIn.dart';
 import 'package:civic_points/webService.dart';
 import 'package:flutter/material.dart';
+import 'package:civic_points/pages/profileParameters.dart';
 
 import '../bloc.navigation_bloc/navigation_bloc.dart';
 
@@ -12,8 +13,11 @@ class MyAccountsPageList extends State<MyAccountsPage> {
   // List<Comune> _comuni = [new Comune(nome: 'Udine'),new Comune(nome: 'Gorizia'),new Comune(nome: 'Trieste'),new Comune(nome: 'Pordenone')];
 
   List<Comune> _comuni = [new Comune(nome: 'Udine')];
+
   bool boolComuneDiInteresse = false;
   bool boolComuneDiResidenza = false;
+  int modifica;
+  int indice;
 
   @override
   void initState() {
@@ -59,10 +63,15 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     onPressed: () {
+                      modifica = 2;
+                      indice = index + 1;
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => citySelection()));
+                              builder: (context) => citySelection(
+                                profileParameters:
+                                new ProfileParameters(modifica, indice),
+                              )));
                     },
                   ),
                 ),
@@ -174,10 +183,14 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     onPressed: () {
+                      modifica = 1;
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => citySelection()));
+                              builder: (context) => citySelection(
+                                profileParameters:
+                                new ProfileParameters(modifica, indice),
+                              )));
                     },
                   ),
                 if (boolComuneDiInteresse && boolComuneDiResidenza)
@@ -204,10 +217,15 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     onPressed: () {
+                      modifica = 2;
+                      indice = 1;
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => citySelection()));
+                              builder: (context) => citySelection(
+                                profileParameters:
+                                new ProfileParameters(modifica, indice),
+                              )));
                     },
                   ),
                 if (!boolComuneDiResidenza)
@@ -219,10 +237,14 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     onPressed: () {
+                      modifica = 1;
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => citySelection()));
+                              builder: (context) => citySelection(
+                                profileParameters:
+                                new ProfileParameters(modifica, indice),
+                              )));
                     },
                   ),
               ],
