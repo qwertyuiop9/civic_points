@@ -5,14 +5,17 @@ import 'package:civic_points/webService.dart';
 
 class Comune {
   final String nome;
+  final List<String> categorieDisponibili;
 
   Comune(
       {
-      this.nome});
+      this.nome,
+      this.categorieDisponibili});
 
   factory Comune.fromJson(Map<String, dynamic> json) {
     return Comune(
-        nome: json['comune'],
+        nome: json['nomeComune'],
+        categorieDisponibili: json['categorieDisponibili'],
         );
   }
 

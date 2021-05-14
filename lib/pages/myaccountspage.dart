@@ -8,14 +8,16 @@ import 'package:civic_points/signIn.dart';
 import 'package:civic_points/idToken.dart';
 import '../bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:civic_points/profiloUtente.dart';
 
 class MyAccountsPageList extends State<MyAccountsPage> {
-  //List<Comune> _comuni = [];
+  List<Comune> _comuni = [];
 
   //List<Comune> _comuni = [new Comune(nome: 'Udine'),new Comune(nome: 'Gorizia'),new Comune(nome: 'Trieste'),new Comune(nome: 'Pordenone')];
 
   //List<Comune> _comuni = [new Comune(nome: 'Udine')];
 
+  ProfiloUtente profilo;
   bool boolComuneDiInteresse = false;
   bool boolComuneDiResidenza = false;
   int modifica;
@@ -27,18 +29,20 @@ class MyAccountsPageList extends State<MyAccountsPage> {
   void initState() {
     super.initState();
 
-    ///_populateNewsArticles();
+    _populateNewsArticles();
     if (!_comuni.isEmpty) {
       boolComuneDiResidenza = true;
       if (_comuni.asMap().containsKey(1)) {
         boolComuneDiInteresse = true;
       }
+      _comuni = profilo.comuniDiInteresse;
+      _comuni.insert(0, profilo.comuneDiResidenza);
     }
   }
 
   void _populateNewsArticles() {
-    Webservice().load(Comune.all).then((comune) => {
-          setState(() => {_comuni = comune})
+    Webservice().load(ProfiloUtente.profilo).then((profilo) => {
+          setState(() => {profilo})
         });
   }
 
