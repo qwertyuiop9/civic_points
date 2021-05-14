@@ -101,4 +101,20 @@ class serverConnection {
       print('Errore');
     }
   }
+
+  ///Questa funzione ritorna ritorna una stringa con il comune di residenza
+  ///e successivamente i comuni di interesse
+  static Future<String> getComuni() async {
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            'https://ingsw2020server.herokuapp.com/.........'));
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      return response.stream.bytesToString();
+    } else {
+      print(response.reasonPhrase);
+      return null;
+    }
+  }
 }
