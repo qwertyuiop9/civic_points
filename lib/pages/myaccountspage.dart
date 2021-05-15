@@ -41,7 +41,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
   }
 
   void _populateNewsArticles() {
-    Webservice().load(ProfiloUtente.profilo).then((profilo) => {
+    WebserviceProfilo().load(ProfiloUtente.profilo).then((profilo) => {
           setState(() => {profilo})
         });
   }
@@ -52,7 +52,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
     var request = http.Request(
         'DELETE', Uri.parse('http://ingsw2020server.herokuapp.com/users/me/comuni'));
     request.body = '''{
-                  "comune": "${comuneCancella}",
+                  "comune": "${comuneCancella}"
                 }''';
     request.headers.addAll(headers);
 
@@ -219,7 +219,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                           MaterialPageRoute(
                               builder: (context) => citySelection(
                                 profileParameters:
-                                new ProfileParameters(modifica, indice, aggiungi, null),
+                                new ProfileParameters(modifica, indice, aggiungi, ''),
                               )));
                     },
                   ),
@@ -255,7 +255,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                           MaterialPageRoute(
                               builder: (context) => citySelection(
                                 profileParameters:
-                                new ProfileParameters(modifica, indice, aggiungi, null),
+                                new ProfileParameters(modifica, indice, aggiungi, ''),
                               )));
                     },
                   ),
@@ -275,7 +275,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                           MaterialPageRoute(
                               builder: (context) => citySelection(
                                 profileParameters:
-                                new ProfileParameters(modifica, indice, aggiungi, null),
+                                new ProfileParameters(modifica, indice, aggiungi, ''),
                               )));
                     },
                   ),

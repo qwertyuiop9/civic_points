@@ -28,15 +28,15 @@ class citySelectionState extends State<citySelection> {
     var request = http.Request(
         'PATCH', Uri.parse('http://ingsw2020server.herokuapp.com/users/me/comuni'));
     request.body = '''{
-                  "diResidenza": "${boolSend}",
+                  "diResidenza": ${boolSend},
                   "comuneCancella": "${profileParameters.comuneCancella}",
-                  "comuneAggiungi": "${comune}",
+                  "comuneAggiungi": "${comune}"
                 }''';
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       print(response.statusCode);
       print(await response.stream.bytesToString());
     } else {
@@ -46,8 +46,6 @@ class citySelectionState extends State<citySelection> {
 
   @override
   Widget build(BuildContext context) {
-    print(profileParameters.modifica);
-    print(profileParameters.indice);
     return Scaffold(
       appBar: AppBar(),
       body: Center(

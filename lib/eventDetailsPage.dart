@@ -3,7 +3,7 @@ import 'package:civic_points/event.dart';
 import 'package:flutter/material.dart';
 import 'bloc.navigation_bloc/navigation_bloc.dart';
 
-class DetailedEvent extends StatelessWidget with NavigationStates{
+class DetailedEvent extends StatelessWidget{
   final Event event;
 
   final List<String> imageSource = [

@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:civic_points/signIn.dart';
 
 class serverConnection {
   ///Funzione getAllEvents che ritorna tutti gli eventi nel server, ritorna
@@ -105,6 +106,9 @@ class serverConnection {
   ///Questa funzione ritorna ritorna una stringa con il comune di residenza
   ///e successivamente i comuni di interesse
   static Future<String> getProfiloUtente() async {
+    var headers = {
+      'Authorization': 'Bearer ${token}' //token nell'header Authorization preceduto dalla parola Bearer e uno spazio
+    };
     var request = http.Request(
         'GET',
         Uri.parse(

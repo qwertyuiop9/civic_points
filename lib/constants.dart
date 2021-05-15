@@ -5,5 +5,8 @@ class Constants {
   static final String HEADLINE_BUY_OPTIONS =
       'https://ingsw2020server.herokuapp.com/projects/projectsList';
 
+  static final String HEADLINE_GET_PROFILO =
+      'https://ingsw2020server.herokuapp.com/users/me';
+
   static final String NEWS_PLACEHOLDER_IMAGE_ASSET_URL = 'placeholder.jpg';
 }

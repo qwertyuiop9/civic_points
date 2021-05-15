@@ -6,7 +6,7 @@ import 'package:civic_points/comune.dart';
 
 class ProfiloUtente {
   final String userId;
-  final String email;
+  final String id;
   final RuoloUtente ruolo;
   final Comune comuneDiResidenza;
   final List<Comune> comuniDiInteresse;
@@ -14,16 +14,16 @@ class ProfiloUtente {
   ProfiloUtente(
       {
       this.userId,
-      this.email,
+      this.id,
       this.ruolo,
       this.comuneDiResidenza,
       this.comuniDiInteresse,});
 
   factory ProfiloUtente.fromJson(Map<String, dynamic> json) {
     return ProfiloUtente(
-        userId: json['user_id'],
-        email: json['email'],
         ruolo: json['ruolo'],
+        id: json['_id'],
+        userId: json['uid'],
         comuneDiResidenza: json['comuneDiResidenza'],
         comuniDiInteresse: json['comuneDiInteresse'],
         );
@@ -31,7 +31,7 @@ class ProfiloUtente {
 
   static Resource<ProfiloUtente> get profilo {
     return Resource(
-        url: Constants.HEADLINE_NEWS_URL,
+        url: Constants.HEADLINE_GET_PROFILO,
         parse: (response) {
           final result = json.decode(response.body);
           return result;
