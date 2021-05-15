@@ -23,7 +23,7 @@ class Webservice {
   }
 }
 
-class WebserviceProfilo {
+class WebserviceToken {
   Future<T> load<T>(Resource<T> resource) async {
     final response = await http.get(resource.url, headers: { HttpHeaders.authorizationHeader: 'Bearer ${token}'});
     if (response.statusCode == 200) {

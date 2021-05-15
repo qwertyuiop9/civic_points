@@ -41,7 +41,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
   }
 
   void _populateNewsArticles() {
-    WebserviceProfilo().load(ProfiloUtente.profilo).then((profilo) => {
+    WebserviceToken().load(ProfiloUtente.profilo).then((profilo) => {
           setState(() => {profilo})
         });
   }

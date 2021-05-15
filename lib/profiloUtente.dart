@@ -34,6 +34,7 @@ class ProfiloUtente {
         url: Constants.HEADLINE_GET_PROFILO,
         parse: (response) {
           final result = json.decode(response.body);
+          Map<String, dynamic>.from(result);
           return result;
         });
   }
