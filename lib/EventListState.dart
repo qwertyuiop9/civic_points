@@ -10,6 +10,7 @@ import 'event.dart';
 
 class EventsListState extends State<EventsList> {
   List<Event> _eventDetails = [];
+
   var title_search = "";
   final titleController = TextEditingController();
   var searchOn = false;

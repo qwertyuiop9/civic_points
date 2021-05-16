@@ -1,4 +1,5 @@
 import 'package:civic_points/search/search.dart';
+import 'package:civic_points/search/search_result_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +45,7 @@ class _AdvancedSearchState extends State<AdvancedSearch> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(16.0, 32, 16, 0),
+                padding: const EdgeInsets.fromLTRB(16.0, 16, 16, 0),
                 child: Text(
                   'Titolo evento',
                   style: TextStyle(
@@ -97,6 +98,7 @@ class _AdvancedSearchState extends State<AdvancedSearch> {
                             setState(() {
                               this.start_date =
                                   '${pickedDate.day.toString()}/${pickedDate.month.toString()}/${pickedDate.year.toString()}';
+                              this.searchParams.start_date = pickedDate;
                             });
                           });
                         }),
@@ -125,6 +127,7 @@ class _AdvancedSearchState extends State<AdvancedSearch> {
                             setState(() {
                               this.end_date =
                                   '${pickedDate.day.toString()}/${pickedDate.month.toString()}/${pickedDate.year.toString()}';
+                              this.searchParams.end_date = pickedDate;
                             });
                           });
                         }),
@@ -157,7 +160,17 @@ class _AdvancedSearchState extends State<AdvancedSearch> {
                 padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
                 child: ElevatedButton(
                   onPressed: () {
-                    // Chiamata al server
+                    this.searchParams.categories =
+                        getSelectedCategories(_categories, _is_category_active);
+                    print(_categories);
+                    print(_is_category_active);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ResultsList(
+                                params: searchParams,
+                              )),
+                    );
                   },
                   child: Text(
                     'Avvia ricerca',
@@ -180,9 +193,10 @@ class _AdvancedSearchState extends State<AdvancedSearch> {
     return CheckboxListTile(
       title: Text(category),
       value: _is_category_active[index],
-      onChanged: (bool value) {
+      onChanged: (bool newValue) {
         setState(() {
-          _is_category_active[index] = value;
+          _is_category_active[index] = newValue;
+          print(newValue);
         });
       },
     );
@@ -191,14 +205,17 @@ class _AdvancedSearchState extends State<AdvancedSearch> {
   // Chiamata http che restituisce una lista di categorie relative all'utente in base al suo profilo
   List<String> _getUserCategories() {
     /** Aggiungere l'implementazione**/
-    return [
-      "HardCoded",
-      "Cinema",
-      "Spettacolo",
-      "Sport",
-      "Test 1",
-      "Test 2",
-      "Outfit"
-    ];
+    return ["NATURA", "SPORT", "MUSICA", "SAGRA", "CULTURA"];
+  }
+
+  List<String> getSelectedCategories(
+      List<String> categories, List<bool> is_category_active) {
+    List<String> selected = [];
+    for (var i = 0; i < categories.length; i++) {
+      if (is_category_active[i]) {
+        selected.add(categories[i]);
+      }
+    }
+    return selected;
   }
 }

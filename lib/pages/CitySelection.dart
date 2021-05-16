@@ -1,11 +1,9 @@
+import 'package:civic_points/pages/myaccountspage.dart';
+import 'package:civic_points/pages/profileParameters.dart';
+import 'package:civic_points/signIn.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:civic_points/pages/profileParameters.dart';
 import 'package:http/http.dart' as http;
-import 'package:civic_points/pages/myaccountspage.dart';
-import 'package:civic_points/signIn.dart';
-import 'package:civic_points/idToken.dart';
-
 
 class citySelectionState extends State<citySelection> {
   /// Variables to store country state city data in onChanged method.
@@ -23,10 +21,12 @@ class citySelectionState extends State<citySelection> {
   bool boolSend = false;
 
   void sendComune() async {
-    var headers = {'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${token}'};
-    var request = http.Request(
-        'PATCH', Uri.parse('http://ingsw2020server.herokuapp.com/users/me/comuni'));
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${token}'
+    };
+    var request = http.Request('PATCH',
+        Uri.parse('http://ingsw2020server.herokuapp.com/users/me/comuni'));
     request.body = '''{
                   "diResidenza": ${boolSend},
                   "comuneCancella": "${profileParameters.comuneCancella}",
@@ -142,7 +142,8 @@ class citySelectionState extends State<citySelection> {
                   },
                 ),
                 if (!boolVisualizza && !boolRitorna | !boolAggiungi)
-                ///print newly selected country state and city in Text Widget
+
+                  ///print newly selected country state and city in Text Widget
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: RaisedButton(
@@ -176,7 +177,8 @@ class citySelectionState extends State<citySelection> {
                   Text(comune + " inserito!"),
 
                 if (boolVisualizza | boolAggiungi | boolRitorna)
-                ///print newly selected country state and city in Text Widget
+
+                  ///print newly selected country state and city in Text Widget
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: RaisedButton(
@@ -196,21 +198,23 @@ class citySelectionState extends State<citySelection> {
                         },
                         child: Text("Aggiungi comune di interesse")),
                   ),
-                  if (boolVisualizza | boolRitorna)
-                    Padding(
+                if (boolVisualizza | boolRitorna)
+                  Padding(
                     padding: const EdgeInsets.all(16.0),
-                      child: RaisedButton(
-                          textColor: Colors.white,
-                          color: Colors.blueGrey,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                                context, MaterialPageRoute(builder: (context) => MyAccountsPage()));
-                          },
-                          child: Text("Ritorna al profilo")),
-                    ),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyAccountsPage()));
+                        },
+                        child: Text(
+                          "Ritorna al profilo",
+                          style: TextStyle(
+                              color: Colors.white,
+                              backgroundColor: Colors.blueGrey),
+                        )),
+                  ),
               ],
             )),
       ),

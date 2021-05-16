@@ -7,16 +7,13 @@ class Comune {
   final String nome;
   final List<String> categorieDisponibili;
 
-  Comune(
-      {
-      this.nome,
-      this.categorieDisponibili});
+  Comune({this.nome, this.categorieDisponibili});
 
   factory Comune.fromJson(Map<String, dynamic> json) {
     return Comune(
-        nome: json['nomeComune'],
-        categorieDisponibili: json['categorieDisponibili'],
-        );
+      nome: json['nomeComune'],
+      categorieDisponibili: json['categorieDisponibili'],
+    );
   }
 
   static Resource<List<Comune>> get all {
@@ -28,5 +25,4 @@ class Comune {
           return list.map((model) => Comune.fromJson(model)).toList();
         });
   }
-
 }
