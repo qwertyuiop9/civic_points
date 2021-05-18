@@ -1,4 +1,3 @@
-import 'package:civic_points/comune.dart';
 import 'package:civic_points/pages/CitySelection.dart';
 import 'package:civic_points/signIn.dart';
 import 'package:civic_points/webService.dart';
@@ -11,15 +10,15 @@ import 'package:http/http.dart' as http;
 import 'package:civic_points/profiloUtente.dart';
 
 class MyAccountsPageList extends State<MyAccountsPage> {
-  List<Comune> _comuni = [];
+  //List<Comune>_comuni = [];
 
-  //List<Comune> _comuni = [new Comune(nome: 'Udine'),new Comune(nome: 'Gorizia'),new Comune(nome: 'Trieste'),new Comune(nome: 'Pordenone')];
+  //List<Comune> _comuni = [new Comune(nomeComune: 'Gorizia'),new Comune(nomeComune: 'Udine'),new Comune(nomeComune: 'Trieste'),new Comune(nomeComune: 'Pordenone')];
 
-  //List<Comune> _comuni = [new Comune(nome: 'Udine')];
+  //List<Comune> _comuni = [new Comune(nomeComune: 'Udine')];
 
   ProfiloUtente profilo;
-  bool boolComuneDiInteresse = false;
-  bool boolComuneDiResidenza = false;
+  bool boolComuneDiInteresse = true;
+  bool boolComuneDiResidenza = true;
   int modifica;
   int indice;
   bool aggiungi = false;
@@ -28,22 +27,21 @@ class MyAccountsPageList extends State<MyAccountsPage> {
   @override
   void initState() {
     super.initState();
-
-    _populateNewsArticles();
-    if (!_comuni.isEmpty) {
+    _getProfilo();
+    /*if (profilo.comuneDiResidenza != null) {
       boolComuneDiResidenza = true;
-      if (_comuni.asMap().containsKey(1)) {
+      if (profilo.comuniDiInteresse.asMap().containsKey(1)) {
         boolComuneDiInteresse = true;
       }
       _comuni = profilo.comuniDiInteresse;
       _comuni.insert(0, profilo.comuneDiResidenza);
-    }
+    }*/
   }
 
-  void _populateNewsArticles() {
-    WebserviceToken().load(ProfiloUtente.profilo).then((profilo) => {
-          setState(() => {profilo})
-        });
+  void _getProfilo() {
+    WebserviceToken().load(ProfiloUtente.profilo).then((profiloRicevuto) => {
+      setState(() => {this.profilo = profiloRicevuto}),
+    });
   }
 
   void deleteComune() async {
@@ -65,13 +63,14 @@ class MyAccountsPageList extends State<MyAccountsPage> {
       print(response.reasonPhrase);
     }
   }
+
   Widget _buildItemsForComuniListView(BuildContext context, int index) {
-    final comune = _comuni[index + 1];
+    final comune = profilo.comuniDiInteresse[index].nomeComune;
     return new Container(
       child: Column(
         children: <Widget>[
           Text(
-            comune.nome,
+            comune,
             style: TextStyle(
                 fontSize: 20,
                 color: Colors.blueGrey,
@@ -91,13 +90,14 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                     ),
                     onPressed: () {
                       modifica = 2;
-                      indice = index + 1;
+                      //indice = index + 1;
+                      indice = index;
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => citySelection(
                                 profileParameters:
-                                new ProfileParameters(modifica, indice, aggiungi, comune.nome),
+                                new ProfileParameters(modifica, indice, aggiungi, comune),
                               )));
                     },
                   ),
@@ -132,15 +132,18 @@ class MyAccountsPageList extends State<MyAccountsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var comuneDiResidenza;
-    var _count;
-    if (boolComuneDiResidenza) {
-      comuneDiResidenza = _comuni[0];
+    try {
+      print (profilo.comuneDiResidenza.nomeComune);
+    } catch (e) {
+      boolComuneDiResidenza = false;
+      try {
+        print(profilo.comuniDiInteresse[0].nomeComune);
+      } catch (e) {
+        boolComuneDiInteresse = false;
+      }
     }
-    if (boolComuneDiInteresse) {
-      _count = _comuni.length - 1;
-    }
-
+    var comuneResidenza = profilo.comuneDiResidenza.nomeComune;
+    print(profilo.comuneDiResidenza.nomeComune);
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 50.0,
@@ -197,7 +200,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                   ),
                 if (boolComuneDiResidenza)
                   Text(
-                    comuneDiResidenza.nome,
+                    comuneResidenza,
                     style: TextStyle(
                         fontSize: 20,
                         color: Colors.blueGrey,
@@ -232,7 +235,8 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                   ),
                 if (boolComuneDiInteresse && boolComuneDiResidenza)
                   ListView.builder(
-                    itemCount: _count,
+                    //itemCount: _count,
+                    itemCount: profilo.comuniDiInteresse.length,
                     shrinkWrap: true,
                     itemBuilder: _buildItemsForComuniListView,
                   ),
@@ -248,7 +252,8 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                     ),
                     onPressed: () {
                       modifica = 2;
-                      indice = _comuni.length+1;
+                      //indice = _comuni.length+1;
+                      indice = profilo.comuniDiInteresse.length;
                       aggiungi = true;
                       Navigator.push(
                           context,

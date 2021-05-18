@@ -18,7 +18,7 @@ class citySelectionState extends State<citySelection> {
   bool boolInserito = false;
   bool boolRitorna = false;
   bool boolAggiungi = false;
-  bool boolSend = false;
+  bool boolSend = true;
 
   void sendComune() async {
     var headers = {
@@ -158,7 +158,7 @@ class citySelectionState extends State<citySelection> {
                             indice = profileParameters.indice;
                             if (profileParameters.modifica == 1) {
                               boolVisualizza = true;
-                              boolSend == true;
+                              boolSend == false;
                             }
                             if (profileParameters.modifica == 2) {
                               boolRitorna = true;
