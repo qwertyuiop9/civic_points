@@ -3,8 +3,6 @@ import 'package:civic_points/signIn.dart';
 import 'package:civic_points/webService.dart';
 import 'package:flutter/material.dart';
 import 'package:civic_points/pages/profileParameters.dart';
-import 'package:civic_points/signIn.dart';
-import 'package:civic_points/idToken.dart';
 import '../bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:civic_points/profiloUtente.dart';
@@ -27,15 +25,9 @@ class MyAccountsPageList extends State<MyAccountsPage> {
   @override
   void initState() {
     super.initState();
-    _getProfilo();
-    /*if (profilo.comuneDiResidenza != null) {
-      boolComuneDiResidenza = true;
-      if (profilo.comuniDiInteresse.asMap().containsKey(1)) {
-        boolComuneDiInteresse = true;
-      }
-      _comuni = profilo.comuniDiInteresse;
-      _comuni.insert(0, profilo.comuneDiResidenza);
-    }*/
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getProfilo();
+    });
   }
 
   void _getProfilo() {
@@ -44,7 +36,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
     });
   }
 
-  void deleteComune() async {
+  void deleteComune(var comuneCancella) async {
     var headers = {'Content-Type': 'application/json',
       'Authorization': 'Bearer ${token}'};
     var request = http.Request(
@@ -113,7 +105,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                     ),
                     onPressed: () {
                       comuneCancella = comune;
-                      deleteComune();
+                      deleteComune(comuneCancella);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -132,25 +124,29 @@ class MyAccountsPageList extends State<MyAccountsPage> {
 
   @override
   Widget build(BuildContext context) {
+    var comuneResidenza = (profilo == null) ? null : profilo.comuneDiResidenza.nomeComune;
+    var comuneInteresse = (profilo == null) ? null : (profilo.comuniDiInteresse[0].nomeComune);
     try {
-      print (profilo.comuneDiResidenza.nomeComune);
+      print (profilo.comuneDiResidenza.enabled);
     } catch (e) {
-      boolComuneDiResidenza = false;
+      boolComuneDiResidenza = true;
       try {
         print(profilo.comuniDiInteresse[0].nomeComune);
       } catch (e) {
         boolComuneDiInteresse = false;
       }
     }
-    var comuneResidenza = profilo.comuneDiResidenza.nomeComune;
-    print(profilo.comuneDiResidenza.nomeComune);
+
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 50.0,
         title: new Text("Il mio profilo"),
         automaticallyImplyLeading: false,
       ),
-      body: SingleChildScrollView(
+      body: (profilo == null)
+          ? Center(child: CircularProgressIndicator(),)
+          :
+      SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.fromLTRB(16, 16, 0, 0),
           width: double.infinity,
@@ -235,7 +231,6 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                   ),
                 if (boolComuneDiInteresse && boolComuneDiResidenza)
                   ListView.builder(
-                    //itemCount: _count,
                     itemCount: profilo.comuniDiInteresse.length,
                     shrinkWrap: true,
                     itemBuilder: _buildItemsForComuniListView,
@@ -252,7 +247,6 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                     ),
                     onPressed: () {
                       modifica = 2;
-                      //indice = _comuni.length+1;
                       indice = profilo.comuniDiInteresse.length;
                       aggiungi = true;
                       Navigator.push(

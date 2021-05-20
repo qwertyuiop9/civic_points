@@ -18,7 +18,7 @@ class citySelectionState extends State<citySelection> {
   bool boolInserito = false;
   bool boolRitorna = false;
   bool boolAggiungi = false;
-  bool boolSend = true;
+  bool boolSend = false;
 
   void sendComune() async {
     var headers = {
@@ -158,7 +158,7 @@ class citySelectionState extends State<citySelection> {
                             indice = profileParameters.indice;
                             if (profileParameters.modifica == 1) {
                               boolVisualizza = true;
-                              boolSend == false;
+                              boolSend = true;
                             }
                             if (profileParameters.modifica == 2) {
                               boolRitorna = true;
@@ -193,7 +193,7 @@ class citySelectionState extends State<citySelection> {
                             boolVisualizza = false;
                             boolAggiungi = false;
                             boolRitorna = false;
-                            boolSend = false;
+                            boolSend = true;
                           });
                         },
                         child: Text("Aggiungi comune di interesse")),

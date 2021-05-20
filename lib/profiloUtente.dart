@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:civic_points/ruoloUtente.dart';
 import 'package:civic_points/constants.dart';
 import 'package:civic_points/webService.dart';
 
@@ -56,6 +55,7 @@ class ProfiloUtente {
         url: Constants.HEADLINE_GET_PROFILO,
         parse: (response) {
           ProfiloUtente profilo = ProfiloUtente.fromJson(jsonDecode(response.body));
+          print(jsonDecode(response.body));
           return profilo;
         });
   }
