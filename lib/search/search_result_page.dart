@@ -28,10 +28,6 @@ class ResultsListState extends State<ResultsList> {
       'date_from': params.start_date,
       'date_to': params.end_date
     });
-    print('Il mio token: $token');
-    print('\nINIZIO DATI OTTENUTI\n');
-    print(response.data);
-    print('\FINE DATI OTTENUTI\n');
     List<Event> _resultedEvents =
         List<Event>.from(response.data.map((model) => Event.fromJson(model)));
     print(_resultedEvents);

@@ -1,7 +1,14 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:civic_points/search/search.dart';
 import 'package:civic_points/search/search_result_page.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import '../signIn.dart';
 
 class AdvancedSearch extends StatefulWidget {
   final SearchParams searchParams;
@@ -22,7 +29,25 @@ class _AdvancedSearchState extends State<AdvancedSearch> {
   List<bool> _is_category_active = [];
 
   // Costruttore base
-  _AdvancedSearchState(this.searchParams);
+
+  final Dio _dio;
+
+  _AdvancedSearchState(this.searchParams)
+      : _dio = Dio(BaseOptions(
+          baseUrl: 'https://ingsw2020server.herokuapp.com',
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token'
+          },
+        ));
+
+  void getUserCategories(SearchParams params) async {
+    var album = await fetchAlbum();
+    print(album.categorie);
+    setState(() {
+      this._categories = album.categorie;
+    });
+  }
 
   @override
   void initState() {
@@ -30,6 +55,7 @@ class _AdvancedSearchState extends State<AdvancedSearch> {
     this._categories = _getUserCategories();
     // Creo una lista lunga quanto il numero di categorie disponibili e la riempio di valori falsi al fine di rappresentare la selezione delle checkbox
     this._is_category_active = List.filled(this._categories.length, false);
+    getUserCategories(searchParams);
   }
 
   @override
@@ -205,7 +231,13 @@ class _AdvancedSearchState extends State<AdvancedSearch> {
   // Chiamata http che restituisce una lista di categorie relative all'utente in base al suo profilo
   List<String> _getUserCategories() {
     /** Aggiungere l'implementazione**/
-    return ["NATURA", "SPORT", "MUSICA", "SAGRA", "CULTURA"];
+
+    return [
+      'Caricando categoria...',
+      'Caricando categoria...',
+      'Caricando categoria...',
+      'Caricando categoria...'
+    ];
   }
 
   List<String> getSelectedCategories(
@@ -216,6 +248,38 @@ class _AdvancedSearchState extends State<AdvancedSearch> {
         selected.add(categories[i]);
       }
     }
-    return selected;
+    if (selected.length == 0) {
+      return _getUserCategories();
+    } else {
+      return selected;
+    }
+  }
+}
+
+Future<Album> fetchAlbum() async {
+  final response = await http.get(
+    Uri.parse(
+        'https://ingsw2020server.herokuapp.com/users/me/categorieDisponibili'),
+    // Send authorization headers to the backend.
+    headers: {
+      HttpHeaders.authorizationHeader: 'Bearer $token',
+    },
+  );
+  final responseJson = jsonDecode(response.body);
+
+  return Album.fromJson(responseJson);
+}
+
+class Album {
+  final List<String> categorie;
+
+  Album({
+    this.categorie,
+  });
+
+  factory Album.fromJson(Map<String, dynamic> json) {
+    return Album(
+      categorie: json['categorieDiInteresse'].cast<String>(),
+    );
   }
 }

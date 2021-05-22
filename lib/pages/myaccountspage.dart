@@ -1,11 +1,12 @@
 import 'package:civic_points/pages/CitySelection.dart';
+import 'package:civic_points/pages/profileParameters.dart';
+import 'package:civic_points/profiloUtente.dart';
 import 'package:civic_points/signIn.dart';
 import 'package:civic_points/webService.dart';
 import 'package:flutter/material.dart';
-import 'package:civic_points/pages/profileParameters.dart';
-import '../bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:http/http.dart' as http;
-import 'package:civic_points/profiloUtente.dart';
+
+import '../bloc.navigation_bloc/navigation_bloc.dart';
 
 class MyAccountsPageList extends State<MyAccountsPage> {
   //List<Comune>_comuni = [];
@@ -32,15 +33,17 @@ class MyAccountsPageList extends State<MyAccountsPage> {
 
   void _getProfilo() {
     WebserviceToken().load(ProfiloUtente.profilo).then((profiloRicevuto) => {
-      setState(() => {this.profilo = profiloRicevuto}),
-    });
+          setState(() => {this.profilo = profiloRicevuto}),
+        });
   }
 
   void deleteComune(var comuneCancella) async {
-    var headers = {'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${token}'};
-    var request = http.Request(
-        'DELETE', Uri.parse('http://ingsw2020server.herokuapp.com/users/me/comuni'));
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${token}'
+    };
+    var request = http.Request('DELETE',
+        Uri.parse('http://ingsw2020server.herokuapp.com/users/me/comuni'));
     request.body = '''{
                   "comune": "${comuneCancella}"
                 }''';
@@ -88,9 +91,9 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => citySelection(
-                                profileParameters:
-                                new ProfileParameters(modifica, indice, aggiungi, comune),
-                              )));
+                                    profileParameters: new ProfileParameters(
+                                        modifica, indice, aggiungi, comune),
+                                  )));
                     },
                   ),
                 ),
@@ -124,10 +127,12 @@ class MyAccountsPageList extends State<MyAccountsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var comuneResidenza = (profilo == null) ? null : profilo.comuneDiResidenza.nomeComune;
-    var comuneInteresse = (profilo == null) ? null : (profilo.comuniDiInteresse[0].nomeComune);
+    var comuneResidenza =
+        (profilo == null) ? null : profilo.comuneDiResidenza.nomeComune;
+    var comuneInteresse =
+        (profilo == null) ? null : (profilo.comuniDiInteresse[0].nomeComune);
     try {
-      print (profilo.comuneDiResidenza.enabled);
+      print(profilo.comuneDiResidenza.enabled);
     } catch (e) {
       boolComuneDiResidenza = true;
       try {
@@ -144,145 +149,153 @@ class MyAccountsPageList extends State<MyAccountsPage> {
         automaticallyImplyLeading: false,
       ),
       body: (profilo == null)
-          ? Center(child: CircularProgressIndicator(),)
-          :
-      SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.fromLTRB(16, 16, 0, 0),
-          width: double.infinity,
-          color: Colors.white,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                SizedBox(height: 40),
-                CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    imageUrl,
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(16, 16, 0, 0),
+                width: double.infinity,
+                color: Colors.white,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      SizedBox(height: 40),
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          imageUrl,
+                        ),
+                        radius: 48,
+                        backgroundColor: Colors.transparent,
+                      ),
+                      SizedBox(height: 48),
+                      Text(
+                        'Utente',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        name,
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        'E-mail',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        email,
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 20),
+                      if (boolComuneDiResidenza)
+                        Text(
+                          'Comune di residenza',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      if (boolComuneDiResidenza)
+                        Text(
+                          comuneResidenza,
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      if (boolComuneDiResidenza)
+                        RaisedButton(
+                          child: Text("Modifica"),
+                          textColor: Colors.white,
+                          color: Colors.blueGrey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          onPressed: () {
+                            modifica = 1;
+                            indice = 0;
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => citySelection(
+                                          profileParameters:
+                                              new ProfileParameters(modifica,
+                                                  indice, aggiungi, ''),
+                                        )));
+                          },
+                        ),
+                      if (boolComuneDiInteresse && boolComuneDiResidenza)
+                        SizedBox(height: 20),
+                      if (boolComuneDiInteresse && boolComuneDiResidenza)
+                        Text(
+                          'Comuni di interesse',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      if (boolComuneDiInteresse && boolComuneDiResidenza)
+                        ListView.builder(
+                          itemCount: profilo.comuniDiInteresse.length,
+                          shrinkWrap: true,
+                          itemBuilder: _buildItemsForComuniListView,
+                        ),
+                      if (boolComuneDiResidenza && !boolComuneDiInteresse)
+                        SizedBox(height: 20),
+                      if (boolComuneDiResidenza)
+                        RaisedButton(
+                          child: Text("Aggiungi comune di interesse"),
+                          textColor: Colors.white,
+                          color: Colors.blueGrey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          onPressed: () {
+                            modifica = 2;
+                            indice = profilo.comuniDiInteresse.length;
+                            aggiungi = true;
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => citySelection(
+                                          profileParameters:
+                                              new ProfileParameters(modifica,
+                                                  indice, aggiungi, ''),
+                                        )));
+                          },
+                        ),
+                      if (!boolComuneDiResidenza)
+                        RaisedButton(
+                          child: Text("Aggiungi comune di residenza"),
+                          textColor: Colors.white,
+                          color: Colors.blueGrey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          onPressed: () {
+                            modifica = 1;
+                            indice = 0;
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => citySelection(
+                                          profileParameters:
+                                              new ProfileParameters(modifica,
+                                                  indice, aggiungi, ''),
+                                        )));
+                          },
+                        ),
+                    ],
                   ),
-                  radius: 48,
-                  backgroundColor: Colors.transparent,
                 ),
-                SizedBox(height: 48),
-                Text(
-                  'Utente',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  name,
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.blueGrey,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 20),
-                Text(
-                  'E-mail',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  email,
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.blueGrey,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 20),
-                if (boolComuneDiResidenza)
-                  Text(
-                    'Comune di residenza',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                if (boolComuneDiResidenza)
-                  Text(
-                    comuneResidenza,
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.blueGrey,
-                        fontWeight: FontWeight.bold),
-                  ),
-                if (boolComuneDiResidenza)
-                  RaisedButton(
-                    child: Text("Modifica"),
-                    textColor: Colors.white,
-                    color: Colors.blueGrey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    onPressed: () {
-                      modifica = 1;
-                      indice = 0;
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => citySelection(
-                                profileParameters:
-                                new ProfileParameters(modifica, indice, aggiungi, ''),
-                              )));
-                    },
-                  ),
-                if (boolComuneDiInteresse && boolComuneDiResidenza)
-                  SizedBox(height: 20),
-                if (boolComuneDiInteresse && boolComuneDiResidenza)
-                  Text(
-                    'Comuni di interesse',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                if (boolComuneDiInteresse && boolComuneDiResidenza)
-                  ListView.builder(
-                    itemCount: profilo.comuniDiInteresse.length,
-                    shrinkWrap: true,
-                    itemBuilder: _buildItemsForComuniListView,
-                  ),
-                if (boolComuneDiResidenza && !boolComuneDiInteresse)
-                  SizedBox(height: 20),
-                if (boolComuneDiResidenza)
-                  RaisedButton(
-                    child: Text("Aggiungi comune di interesse"),
-                    textColor: Colors.white,
-                    color: Colors.blueGrey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    onPressed: () {
-                      modifica = 2;
-                      indice = profilo.comuniDiInteresse.length;
-                      aggiungi = true;
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => citySelection(
-                                profileParameters:
-                                new ProfileParameters(modifica, indice, aggiungi, ''),
-                              )));
-                    },
-                  ),
-                if (!boolComuneDiResidenza)
-                  RaisedButton(
-                    child: Text("Aggiungi comune di residenza"),
-                    textColor: Colors.white,
-                    color: Colors.blueGrey,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    onPressed: () {
-                      modifica = 1;
-                      indice = 0;
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => citySelection(
-                                profileParameters:
-                                new ProfileParameters(modifica, indice, aggiungi, ''),
-                              )));
-                    },
-                  ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }
