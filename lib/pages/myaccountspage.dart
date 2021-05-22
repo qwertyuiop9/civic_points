@@ -16,8 +16,8 @@ class MyAccountsPageList extends State<MyAccountsPage> {
   //List<Comune> _comuni = [new Comune(nomeComune: 'Udine')];
 
   ProfiloUtente profilo;
-  bool boolComuneDiInteresse = true;
-  bool boolComuneDiResidenza = true;
+  bool boolComuneDiInteresse = false;
+  bool boolComuneDiResidenza = false;
   int modifica;
   int indice;
   bool aggiungi = false;
@@ -109,10 +109,9 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                     onPressed: () {
                       comuneCancella = comune;
                       deleteComune(comuneCancella);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => citySelection()));
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        _getProfilo();
+                      });
                     },
                   ),
                 ),
@@ -129,16 +128,15 @@ class MyAccountsPageList extends State<MyAccountsPage> {
   Widget build(BuildContext context) {
     var comuneResidenza =
         (profilo == null) ? null : profilo.comuneDiResidenza.nomeComune;
-    var comuneInteresse =
-        (profilo == null) ? null : (profilo.comuniDiInteresse[0].nomeComune);
-    try {
-      print(profilo.comuneDiResidenza.enabled);
-    } catch (e) {
+    if (!profilo.comuniDiInteresse.isEmpty) {
+      var comuneInteresse =
+      (profilo.comuniDiInteresse[0].nomeComune == null) ? null : (profilo
+          .comuniDiInteresse[0].nomeComune);
+    }
+    if (comuneResidenza != null) {
       boolComuneDiResidenza = true;
-      try {
-        print(profilo.comuniDiInteresse[0].nomeComune);
-      } catch (e) {
-        boolComuneDiInteresse = false;
+      if (!profilo.comuniDiInteresse.isEmpty) {
+        boolComuneDiInteresse = true;
       }
     }
 
