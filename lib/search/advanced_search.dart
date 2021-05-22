@@ -46,6 +46,7 @@ class _AdvancedSearchState extends State<AdvancedSearch> {
     print(album.categorie);
     setState(() {
       this._categories = album.categorie;
+      this._is_category_active = List.filled(album.categorie.length, false);
     });
   }
 
