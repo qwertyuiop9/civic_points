@@ -126,20 +126,31 @@ class MyAccountsPageList extends State<MyAccountsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var comuneResidenza =
-        (profilo == null) ? null : profilo.comuneDiResidenza.nomeComune;
-    if (!profilo.comuniDiInteresse.isEmpty) {
-      var comuneInteresse =
-      (profilo.comuniDiInteresse[0].nomeComune == null) ? null : (profilo
-          .comuniDiInteresse[0].nomeComune);
-    }
-    if (comuneResidenza != null) {
-      boolComuneDiResidenza = true;
-      if (!profilo.comuniDiInteresse.isEmpty) {
-        boolComuneDiInteresse = true;
+    var comuneResidenza;
+    var comuneInteresse;
+
+
+    try {
+      comuneResidenza = (profilo == null) ? null : profilo.comuneDiResidenza.nomeComune;
+
+      print ('comune di residenza cè');
+      try {
+        comuneInteresse = (profilo == null) ? null : (profilo.comuniDiInteresse[0].nomeComune);
+
+        print ('comune di interesse cè');
+      } catch (e) {
+        print ('comune di residenza non cè');
       }
+    } catch (e) {
+      print ('comune di interesse non cè');
     }
 
+    if (comuneResidenza  != null){
+      boolComuneDiResidenza = true;
+    }
+    if (comuneInteresse != null){
+      boolComuneDiInteresse = true;
+    }
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 50.0,

@@ -193,7 +193,8 @@ class citySelectionState extends State<citySelection> {
                             boolVisualizza = false;
                             boolAggiungi = false;
                             boolRitorna = false;
-                            boolSend = true;
+                            profileParameters.modifica = 2;
+                            boolSend = false;
                           });
                         },
                         child: Text("Aggiungi comune di interesse")),
