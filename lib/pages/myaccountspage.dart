@@ -185,13 +185,55 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      Text(
+                      /*Text(
                         name,
                         style: TextStyle(
                             fontSize: 20,
                             color: Colors.blueGrey,
                             fontWeight: FontWeight.bold),
+                      ),*/
+                      InkWell(
+                        child: Container(
+                            height: 50.0,
+                            alignment: Alignment.center,
+                            child: Stack(
+                                children:<Widget>[
+                                  Align(alignment: Alignment.center, child: Text(name,
+                                    style: TextStyle(fontSize: 20,
+                                        color: Colors.blueGrey,
+                                        fontWeight: FontWeight.bold),)),
+                                  //itSelected ? Positioned(top: 12.0, right: 10.0, child: Icon(Icons.check)) : Container(),
+                                  Positioned(top: 12.0, right: 20.0, child: Container(
+                                    child: Image(
+                                      image: AssetImage(
+                                        'assets/icona_sindaco_blu.png',
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    height: 25,
+                                    width: 25,
+                                  ),)
+                                ])
+                        ),
                       ),
+                      /*ListTile(
+                        title: Text(
+                          name,
+                          style: TextStyle(fontSize: 20,
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        trailing: Container(
+                          child: Image(
+                            image: AssetImage(
+                              'assets/icona_sindaco_blu.png',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          height: 25,
+                          width: 25,
+                        ),
+                      ),*/
                       SizedBox(height: 20),
                       Text(
                         'E-mail',
