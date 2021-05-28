@@ -22,6 +22,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
   int indice;
   bool aggiungi = false;
   var comuneCancella;
+  bool boolRuoloSindaco;
 
   @override
   void initState() {
@@ -128,11 +129,11 @@ class MyAccountsPageList extends State<MyAccountsPage> {
   Widget build(BuildContext context) {
     var comuneResidenza;
     var comuneInteresse;
-
+    var ruolo;
 
     try {
       comuneResidenza = (profilo == null) ? null : profilo.comuneDiResidenza.nomeComune;
-
+      ruolo = (profilo == null) ? null : profilo.ruolo;
       print ('comune di residenza cè');
       try {
         comuneInteresse = (profilo == null) ? null : (profilo.comuniDiInteresse[0].nomeComune);
@@ -150,6 +151,11 @@ class MyAccountsPageList extends State<MyAccountsPage> {
     }
     if (comuneInteresse != null){
       boolComuneDiInteresse = true;
+    }
+    if (ruolo == 'cittadino') {
+      boolRuoloSindaco = false;
+    } else if (ruolo == 'sindaco') {
+      boolRuoloSindaco = true;
     }
     return Scaffold(
       appBar: AppBar(
@@ -202,8 +208,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                                     style: TextStyle(fontSize: 20,
                                         color: Colors.blueGrey,
                                         fontWeight: FontWeight.bold),)),
-                                  //itSelected ? Positioned(top: 12.0, right: 10.0, child: Icon(Icons.check)) : Container(),
-                                  Positioned(top: 12.0, right: 20.0, child: Container(
+                                  boolRuoloSindaco ? Positioned(top: 12.0, right: 20.0, child: Container(
                                     child: Image(
                                       image: AssetImage(
                                         'assets/icona_sindaco_blu.png',
@@ -212,7 +217,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                                     ),
                                     height: 25,
                                     width: 25,
-                                  ),)
+                                  ),) : Container(),
                                 ])
                         ),
                       ),

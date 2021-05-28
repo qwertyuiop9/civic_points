@@ -8,6 +8,10 @@ import 'menu_item.dart';
 
 import 'package:civic_points/login.dart';
 import 'package:civic_points/signIn.dart';
+import 'package:civic_points/profiloUtente.dart';
+import 'package:civic_points/webService.dart';
+import 'package:http/http.dart' as http;
+
 
 class SideBar extends StatefulWidget {
   @override
@@ -20,6 +24,8 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
   Stream<bool> isSidebarOpenedStream;
   StreamSink<bool> isSidebarOpenedSink;
   final _animationDuration = const Duration(milliseconds: 500);
+  ProfiloUtente profilo;
+  bool boolRuoloSindaco;
 
   @override
   void initState() {
@@ -28,6 +34,15 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
     isSidebarOpenedStreamController = PublishSubject<bool>();
     isSidebarOpenedStream = isSidebarOpenedStreamController.stream;
     isSidebarOpenedSink = isSidebarOpenedStreamController.sink;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getProfilo();
+    });
+  }
+
+  void _getProfilo() {
+    WebserviceToken().load(ProfiloUtente.profilo).then((profiloRicevuto) => {
+      setState(() => {this.profilo = profiloRicevuto}),
+    });
   }
 
   @override
@@ -54,7 +69,18 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
+    var ruolo;
+    try {
+      ruolo = (profilo == null) ? null : profilo.ruolo;
+      print ('ruolo cè');
+    } catch (e) {
+      print ('ruolo non cè');
+    }
+    if (ruolo == 'cittadino') {
+      boolRuoloSindaco = false;
+    } else if (ruolo == 'sindaco') {
+      boolRuoloSindaco = true;
+    }
     return StreamBuilder<bool>(
       initialData: false,
       stream: isSidebarOpenedStream,
@@ -71,12 +97,15 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   color: const Color(0xFF262AAA),
-                  child: Column(
+                  child: (profilo == null)
+                      ? Center(
+                    child: CircularProgressIndicator(),
+                  ) : Column(
                     children: <Widget>[
                       SizedBox(
                         height: 100,
                       ),
-                      ListTile(
+                      boolRuoloSindaco ? ListTile(
                         title: Text(
                           name,
                           style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w800),
@@ -96,6 +125,17 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                           ),
                           height: 25,
                           width: 25,
+                        ),
+                      ) : ListTile(
+                        title: Text(
+                          name,
+                          style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w800),
+                        ),
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            imageUrl,
+                          ),
+                          radius: 40,
                         ),
                       ),
                       Divider(

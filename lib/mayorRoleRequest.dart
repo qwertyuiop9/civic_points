@@ -1,9 +1,8 @@
 import 'package:civic_points/eventCreated.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:quiver/strings.dart';
-import 'Event.dart';
-import 'package:date_field/date_field.dart';
+import 'package:civic_points/signIn.dart';
+
 
 //Screen for event data entry
 class MayorRoleRequest extends StatelessWidget {
@@ -117,7 +116,9 @@ class MyCustomFormState extends State<MayorRoleRequestForm> {
       if (_formKey.currentState.validate() && _termsChecked) {
         _formKey.currentState.save();
         timestamp = DateTime.now().millisecondsSinceEpoch;
-        var headers = {'Content-Type': 'application/json'};
+        var headers = {'Content-Type': 'application/json',
+                       'Authorization': 'Bearer ${token}'
+        };
         var request = http.Request(
             'POST', Uri.parse('http://ingsw2020server.herokuapp.com/...........'));
         request.body = '''{
