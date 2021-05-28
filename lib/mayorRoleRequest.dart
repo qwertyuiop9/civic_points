@@ -1,8 +1,9 @@
 import 'package:civic_points/eventCreated.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
 import 'package:civic_points/signIn.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
+import 'notifications/Notification_Handler.dart';
 
 //Screen for event data entry
 class MayorRoleRequest extends StatelessWidget {
@@ -49,8 +50,7 @@ class MyCustomFormState extends State<MayorRoleRequestForm> {
           margin: EdgeInsets.all(10.0),
           child: new ListView(
             children: getFormWidget(),
-          )
-      ),
+          )),
     );
   }
 
@@ -58,8 +58,7 @@ class MyCustomFormState extends State<MayorRoleRequestForm> {
     List<Widget> formWidget = new List();
     formWidget.add(
       new TextFormField(
-          decoration: InputDecoration(
-              labelText: 'Nome'),
+          decoration: InputDecoration(labelText: 'Nome'),
           validator: (value) {
             if (value.isEmpty) return 'Prego inserire nome';
           },
@@ -72,8 +71,7 @@ class MyCustomFormState extends State<MayorRoleRequestForm> {
 
     formWidget.add(
       new TextFormField(
-          decoration: InputDecoration(
-              labelText: 'Cognome'),
+          decoration: InputDecoration(labelText: 'Cognome'),
           validator: (value) {
             if (value.isEmpty) return 'Prego inserire cognome';
           },
@@ -86,8 +84,7 @@ class MyCustomFormState extends State<MayorRoleRequestForm> {
 
     formWidget.add(
       new TextFormField(
-          decoration: InputDecoration(
-              labelText: 'Indirizzo'),
+          decoration: InputDecoration(labelText: 'Indirizzo'),
           validator: (value) {
             if (value.isEmpty) return 'Prego inserire indirizzo';
           },
@@ -100,8 +97,7 @@ class MyCustomFormState extends State<MayorRoleRequestForm> {
 
     formWidget.add(
       new TextFormField(
-          decoration: InputDecoration(
-              labelText: 'Comune'),
+          decoration: InputDecoration(labelText: 'Comune'),
           validator: (value) {
             if (value.isEmpty) return 'Prego inserire comune';
           },
@@ -116,11 +112,12 @@ class MyCustomFormState extends State<MayorRoleRequestForm> {
       if (_formKey.currentState.validate() && _termsChecked) {
         _formKey.currentState.save();
         timestamp = DateTime.now().millisecondsSinceEpoch;
-        var headers = {'Content-Type': 'application/json',
-                       'Authorization': 'Bearer ${token}'
+        var headers = {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${token}'
         };
-        var request = http.Request(
-            'POST', Uri.parse('http://ingsw2020server.herokuapp.com/...........'));
+        var request = http.Request('POST',
+            Uri.parse('http://ingsw2020server.herokuapp.com/...........'));
         request.body = '''{
                     "nome": "${nome}",
                     "cognome": "${cognome}",
@@ -141,12 +138,15 @@ class MyCustomFormState extends State<MayorRoleRequestForm> {
           print(response.reasonPhrase);
         }
       }
+      // Schedulazione notifica (l'utente ha l'attribuzione del ruolo di sindaco)
+      nh.scheduleNotification();
     }
-      formWidget.add(new RaisedButton(
-          color: Colors.blueGrey,
-          textColor: Colors.white,
-          child: new Text('Invia richiesta'),
-          onPressed: roleRequest));
-      return formWidget;
-    }
+
+    formWidget.add(new RaisedButton(
+        color: Colors.blueGrey,
+        textColor: Colors.white,
+        child: new Text('Invia richiesta'),
+        onPressed: roleRequest));
+    return formWidget;
   }
+}
