@@ -130,6 +130,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
     var comuneResidenza;
     var comuneInteresse;
     var ruolo;
+    var comuneAmministrato;
 
     try {
       comuneResidenza = (profilo == null) ? null : profilo.comuneDiResidenza.nomeComune;
@@ -137,7 +138,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
       print ('comune di residenza cè');
       try {
         comuneInteresse = (profilo == null) ? null : (profilo.comuniDiInteresse[0].nomeComune);
-
+        comuneAmministrato = (profilo == null) ? null : (profilo.comuneAmministrato.nomeComune);
         print ('comune di interesse cè');
       } catch (e) {
         print ('comune di residenza non cè');
@@ -191,13 +192,14 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      /*Text(
+                      Text(
                         name,
                         style: TextStyle(
                             fontSize: 20,
                             color: Colors.blueGrey,
                             fontWeight: FontWeight.bold),
-                      ),*/
+                      ),
+                      /*Di seguito si lascia l'implementazione con star di colore blu dopo il nome, nel caso in cui un utente sia anche sindaco
                       InkWell(
                         child: Container(
                             height: 50.0,
@@ -220,25 +222,40 @@ class MyAccountsPageList extends State<MyAccountsPage> {
                                   ),) : Container(),
                                 ])
                         ),
-                      ),
-                      /*ListTile(
-                        title: Text(
-                          name,
-                          style: TextStyle(fontSize: 20,
+                      ),*/
+                      if (boolRuoloSindaco == true)
+                        SizedBox(height: 20),
+                      if (boolRuoloSindaco == true)
+                        Text(
+                          'Ruolo',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      if (boolRuoloSindaco == true)
+                        Text(
+                          'Sindaco',
+                          style: TextStyle(
+                              fontSize: 20,
                               color: Colors.blueGrey,
                               fontWeight: FontWeight.bold),
                         ),
-                        trailing: Container(
-                          child: Image(
-                            image: AssetImage(
-                              'assets/icona_sindaco_blu.png',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                          height: 25,
-                          width: 25,
+                      if (boolRuoloSindaco == true)
+                        SizedBox(height: 20),
+                      if (boolRuoloSindaco == true)
+                        Text(
+                          'Comune amministrato',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
-                      ),*/
+                      if (boolRuoloSindaco == true)
+                        Text(
+                          comuneAmministrato,
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.blueGrey,
+                              fontWeight: FontWeight.bold),
+                        ),
+
                       SizedBox(height: 20),
                       Text(
                         'E-mail',

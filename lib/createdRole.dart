@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:civic_points/sidebar/sidebar_layout.dart';
 
 //Screen to confirm event creation
-class createdEvent extends StatelessWidget {
+class createdRole extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +19,7 @@ class createdEvent extends StatelessWidget {
             children: <Widget>[
               SizedBox(height: 40),
               Text(
-                'Evento creato con successo',
+                'Richiesta inviata con successo',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               RaisedButton(

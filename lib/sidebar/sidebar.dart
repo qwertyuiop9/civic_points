@@ -54,6 +54,9 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
   }
 
   void onIconPressed() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getProfilo();
+    });
     final animationStatus = _animationController.status;
     final isAnimationCompleted = animationStatus == AnimationStatus.completed;
 

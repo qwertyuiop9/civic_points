@@ -1,7 +1,5 @@
-import 'package:civic_points/pages/myaccountspage.dart';
 import 'package:civic_points/pages/profileParameters.dart';
 import 'package:civic_points/signIn.dart';
-import 'package:civic_points/pages/homepage.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;

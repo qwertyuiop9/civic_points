@@ -9,6 +9,10 @@ class ProfiloUtente {
   String uid;
   Comune comuneDiResidenza;
   int iV;
+  String indirizzo;
+  String cognomeSindaco;
+  Comune comuneAmministrato;
+  String nomeSindaco;
 
   ProfiloUtente(
       {this.ruolo,
@@ -16,7 +20,12 @@ class ProfiloUtente {
         this.sId,
         this.uid,
         this.comuneDiResidenza,
-        this.iV});
+        this.iV,
+        this.indirizzo,
+        this.cognomeSindaco,
+        this.comuneAmministrato,
+        this.nomeSindaco
+      });
 
   ProfiloUtente.fromJson(Map<String, dynamic> json) {
     ruolo = json['ruolo'];
@@ -32,6 +41,12 @@ class ProfiloUtente {
         ? new Comune.fromJson(json['comuneDiResidenza'])
         : null;
     iV = json['__v'];
+    indirizzo = json['indirizzo'];
+    cognomeSindaco = json['cognomeSindaco'];
+    comuneAmministrato = json['comuneAmministrato'] != null
+        ? new Comune.fromJson(json['comuneAmministrato'])
+        : null;
+    nomeSindaco = json['nomeSindaco'];
   }
 
   Map<String, dynamic> toJson() {
@@ -47,6 +62,12 @@ class ProfiloUtente {
       data['comuneDiResidenza'] = this.comuneDiResidenza.toJson();
     }
     data['__v'] = this.iV;
+    data['indirizzo'] = this.indirizzo;
+    data['cognomeSindaco'] = this.cognomeSindaco;
+    if (this.comuneAmministrato != null) {
+      data['comuneAmministrato'] = this.comuneAmministrato.toJson();
+    }
+    data['nomeSindaco'] = this.nomeSindaco;
     return data;
   }
 

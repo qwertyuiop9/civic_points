@@ -1,4 +1,4 @@
-import 'package:civic_points/eventCreated.dart';
+import 'package:civic_points/createdRole.dart';
 import 'package:civic_points/signIn.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -132,7 +132,7 @@ class MyCustomFormState extends State<MayorRoleRequestForm> {
           print(response.statusCode);
           print(await response.stream.bytesToString());
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => createdEvent()));
+              context, MaterialPageRoute(builder: (context) => createdRole()));
         } else {
           print(response.reasonPhrase);
         }

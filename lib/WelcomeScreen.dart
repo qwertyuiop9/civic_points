@@ -4,11 +4,42 @@ import 'package:flutter/material.dart';
 import 'package:civic_points/bloc.navigation_bloc/navigation_bloc.dart';
 import 'package:civic_points/mayorRoleRequest.dart';
 import 'ProjectOptionsCivicPoints.dart';
+import 'package:civic_points/profiloUtente.dart';
+import 'package:civic_points/webService.dart';
+import 'package:http/http.dart' as http;
 
 //Main screen app
-class WelcomeScreen extends StatelessWidget with NavigationStates {
+//class WelcomeScreen extends StatelessWidget with NavigationStates {
+class WelcomeScreenState extends State<WelcomeScreen> {
+  ProfiloUtente profilo;
+  bool boolRuoloSindaco;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getProfilo();
+    });
+  }
+  void _getProfilo() {
+    WebserviceToken().load(ProfiloUtente.profilo).then((profiloRicevuto) => {
+      setState(() => {this.profilo = profiloRicevuto}),
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    var ruolo;
+    try {
+      ruolo = (profilo == null) ? null : profilo.ruolo;
+      print ('ruolo cè');
+    } catch (e) {
+      print ('ruolo non cè');
+    }
+    if (ruolo == 'cittadino') {
+      boolRuoloSindaco = false;
+    } else if (ruolo == 'sindaco') {
+      boolRuoloSindaco = true;
+    }
     return Scaffold(
       appBar: AppBar(
         //centerTitle: true,
@@ -16,7 +47,10 @@ class WelcomeScreen extends StatelessWidget with NavigationStates {
         title: new Text("Home"),
         automaticallyImplyLeading: false,
       ),
-      body: SingleChildScrollView(
+      body: (profilo == null)
+          ? Center(
+        child: CircularProgressIndicator(),
+      ) : SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.fromLTRB(16, 16, 0, 0),
           width: double.infinity,
@@ -67,19 +101,22 @@ class WelcomeScreen extends StatelessWidget with NavigationStates {
                   elevation: 5,
                 ),
                 SizedBox(height: 40),
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MayorRoleRequest()));
-                  },
-                  child: Text("Richiedi il ruolo di sindaco"),
-                  textColor: Colors.white,
-                  color: Colors.blueGrey,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  elevation: 5,
-                )
+                if (boolRuoloSindaco == false)
+                  RaisedButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) =>
+                              MayorRoleRequest()));
+                    },
+                    child: Text("Richiedi il ruolo di sindaco"),
+                    textColor: Colors.white,
+                    color: Colors.blueGrey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    elevation: 5,
+                  )
+
               ],
             ),
           ),
@@ -96,4 +133,9 @@ class WelcomeScreen extends StatelessWidget with NavigationStates {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => ProjectList()));
   }
+}
+
+class WelcomeScreen extends StatefulWidget with NavigationStates {
+  @override
+  createState() => WelcomeScreenState();
 }
