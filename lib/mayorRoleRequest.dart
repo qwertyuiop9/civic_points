@@ -117,7 +117,7 @@ class MyCustomFormState extends State<MayorRoleRequestForm> {
           'Authorization': 'Bearer ${token}'
         };
         var request = http.Request('POST',
-            Uri.parse('http://ingsw2020server.herokuapp.com/...........'));
+            Uri.parse('http://ingsw2020server.herokuapp.com/gestione_ruoli/richiediRuoloSindaco'));
         request.body = '''{
                     "nome": "${nome}",
                     "cognome": "${cognome}",
@@ -126,10 +126,9 @@ class MyCustomFormState extends State<MayorRoleRequestForm> {
                     "timestamp": "${timestamp}"
                   }''';
         request.headers.addAll(headers);
-
         http.StreamedResponse response = await request.send();
 
-        if (response.statusCode == 201) {
+        if (response.statusCode == 200) {
           print(response.statusCode);
           print(await response.stream.bytesToString());
           Navigator.push(
@@ -139,7 +138,7 @@ class MyCustomFormState extends State<MayorRoleRequestForm> {
         }
       }
       // Schedulazione notifica (l'utente ha l'attribuzione del ruolo di sindaco)
-      nh.scheduleNotification();
+      //nh.scheduleNotification();
     }
 
     formWidget.add(new RaisedButton(

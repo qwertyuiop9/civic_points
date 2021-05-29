@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -46,7 +47,7 @@ class NotificationService {
   //  @Input:   int timestamp in millisecondsSinceEpoch, int note ID, String title of a note, String content of a note, optional String repetition type
   //  @result:  schedules a notification for a certain date and time
   //
-  Future<void> notifyMe() async {
+  Future<void> notifyMe(RemoteMessage message) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
       'Ruolo sindaco',
@@ -62,15 +63,19 @@ class NotificationService {
     const NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
 
+
+    String body = message.notification.body;
+    String title = message.notification.title;
+
     await flutterLocalNotificationsPlugin.zonedSchedule(
       1,
-      'Promozione ruolo',
-      'Sei stato promosso a sindaco!',
+      title,
+      body,
       tz.TZDateTime.now(tz.local).add(Duration(seconds: 1)),
       platformChannelSpecifics,
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
+      UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
 

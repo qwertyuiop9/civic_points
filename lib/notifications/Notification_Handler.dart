@@ -1,11 +1,12 @@
 import 'Notification_Service.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class NotificationHandler {
   final NotificationService notifications = NotificationService();
 
   // schedule notification
-  void scheduleNotification() {
-    this.notifications.notifyMe();
+  void scheduleNotification(RemoteMessage message) {
+    this.notifications.notifyMe(message);
   }
 
   void cancelNotification(int myID) {
