@@ -1,29 +1,39 @@
-import 'package:civic_points/pages/CitySelection.dart';
-import 'package:civic_points/pages/profileParameters.dart';
-import 'package:civic_points/profiloUtente.dart';
-import 'package:civic_points/signIn.dart';
-import 'package:civic_points/webService.dart';
+import 'package:civic_points/userProfile/citySelection.dart';
+import 'package:civic_points/userProfile/profileParameters.dart';
+import 'package:civic_points/userProfile/userProfile.dart';
+import 'package:civic_points/signIn/signIn.dart';
+import 'package:civic_points/serverConnection/webService.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../bloc.navigation_bloc/navigationBloc.dart';
 
-import '../bloc.navigation_bloc/navigation_bloc.dart';
-
+/// Define state of MyAccountsPage
 class MyAccountsPageList extends State<MyAccountsPage> {
-  //List<Comune>_comuni = [];
-
-  //List<Comune> _comuni = [new Comune(nomeComune: 'Gorizia'),new Comune(nomeComune: 'Udine'),new Comune(nomeComune: 'Trieste'),new Comune(nomeComune: 'Pordenone')];
-
-  //List<Comune> _comuni = [new Comune(nomeComune: 'Udine')];
-
+  /// Object to handle user profile information received from server.
   ProfiloUtente profilo;
-  bool boolComuneDiInteresse = false;
+  /// Variable set at the first time to false, to check if the object arriving from the server
+  /// has a home city already set (true) or not (false).
   bool boolComuneDiResidenza = false;
+  /// Variable set at the first time to false, to check if the object arriving from the server
+  /// has a city of interest already set (true) or not (false).
+  bool boolComuneDiInteresse = false;
+  /// Variable to check if the user wants to modify the home city (variable set to 1)
+  /// or he wants to add a city of interest (variable set to 2).
+  /// The variable is sent to the citySelection screen to handle the buttons view
+  /// and understand the user desire.
   int modifica;
+  /// Variable to store city index in list and to send that index through profileParameters
+  /// to the citySelection screen.
   int indice;
+  /// Variable to know if the user want to add a city of interest. Redundant at the moment.
   bool aggiungi = false;
+  /// Variable to store the name of the city of interest to delete.
   var comuneCancella;
+  /// Variable false if ruolo == 'cittadino', true if ruolo == 'sindaco'.
+  /// It handles the view of the fields "Ruolo" and "Comune amministrato" (shown if variable set to true).
   bool boolRuoloSindaco;
 
+  /// Method to initialize state.
   @override
   void initState() {
     super.initState();
@@ -32,12 +42,14 @@ class MyAccountsPageList extends State<MyAccountsPage> {
     });
   }
 
+  /// Method to get the user profile information from the server.
   void _getProfilo() {
     WebserviceToken().load(ProfiloUtente.profilo).then((profiloRicevuto) => {
           setState(() => {this.profilo = profiloRicevuto}),
         });
   }
 
+  /// Method to delete a city of interest from the list of the user's cities of interest.
   void deleteComune(var comuneCancella) async {
     var headers = {
       'Content-Type': 'application/json',
@@ -373,6 +385,7 @@ class MyAccountsPageList extends State<MyAccountsPage> {
   }
 }
 
+/// Screen to view the user profile information.
 class MyAccountsPage extends StatefulWidget with NavigationStates {
   @override
   createState() => MyAccountsPageList();

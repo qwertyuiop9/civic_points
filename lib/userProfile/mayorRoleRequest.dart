@@ -1,11 +1,11 @@
-import 'package:civic_points/createdRole.dart';
-import 'package:civic_points/signIn.dart';
+import 'package:civic_points/userProfile/mayorCreatedRole.dart';
+import 'package:civic_points/signIn/signIn.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import 'notifications/Notification_Handler.dart';
+import '../notifications/notificationHandler.dart';
 
-//Screen for event data entry
+/// Screen for event data entry
 class MayorRoleRequest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

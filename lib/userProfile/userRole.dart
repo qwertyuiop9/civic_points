@@ -1,8 +1,4 @@
-import 'dart:convert';
-
-import 'package:civic_points/constants.dart';
-import 'package:civic_points/webService.dart';
-
+/// Class to handle the role of a user.
 class RuoloUtente {
   final String ruolo;
 

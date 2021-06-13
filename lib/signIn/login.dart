@@ -1,15 +1,15 @@
-import 'package:civic_points/WelcomeScreen.dart';
-import 'package:civic_points/signIn.dart';
-import 'package:civic_points/sidebar/sidebar_layout.dart';
+import 'package:civic_points/welcomeScreen.dart';
+import 'package:civic_points/signIn/signIn.dart';
+import 'package:civic_points/sidebar/sidebarLayout.dart';
 import 'package:flutter/material.dart';
 
-// Define LoginPage
+/// Define LoginPage
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-// Define State of LoginPage
+/// Define State of LoginPage
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // Button SignIn
+  /// Button SignIn
   Widget _signInButton() {
     return OutlineButton(
       splashColor: Colors.grey,

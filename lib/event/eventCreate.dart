@@ -1,8 +1,8 @@
-import 'package:civic_points/eventCreated.dart';
+import 'package:civic_points/event/eventCreated.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:quiver/strings.dart';
-import 'Event.dart';
+import '../event/event.dart';
 import 'package:date_field/date_field.dart';
 
 //Screen for event data entry

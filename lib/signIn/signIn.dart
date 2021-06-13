@@ -1,10 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:civic_points/idToken.dart';
-
-import 'notifications/firebaseNotification.dart';
-
+import 'package:civic_points/signIn/idToken.dart';
+import '../notifications/firebaseNotification.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -14,7 +12,7 @@ String email;
 String imageUrl;
 String token;
 
-//SignIn Google
+/// Google SignIn
 Future<String> signInWithGoogle() async {
   await Firebase.initializeApp();
 
@@ -39,7 +37,9 @@ Future<String> signInWithGoogle() async {
     name = user.displayName;
     email = user.email;
     imageUrl = user.photoURL;
+    /// Get Google idToken.
     idToken.token = await user.getIdToken();
+    /// Token to check user identity for each call to server.
     token = idToken.token;
 
     // Only taking the first part of the name, i.e., First Name
@@ -56,7 +56,7 @@ Future<String> signInWithGoogle() async {
   return null;
 }
 
-//SignOut Google
+/// Google SignOut
 Future<void> signOutGoogle() async {
   await googleSignIn.signOut();
 

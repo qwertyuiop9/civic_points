@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:civic_points/signIn.dart';
+import 'package:civic_points/signIn/signIn.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';

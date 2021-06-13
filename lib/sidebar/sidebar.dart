@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
-import '../bloc.navigation_bloc/navigation_bloc.dart';
-import 'menu_item.dart';
+import '../bloc.navigation_bloc/navigationBloc.dart';
+import 'menuItem.dart';
 
-import 'package:civic_points/login.dart';
-import 'package:civic_points/signIn.dart';
-import 'package:civic_points/profiloUtente.dart';
-import 'package:civic_points/webService.dart';
+import 'package:civic_points/signIn/login.dart';
+import 'package:civic_points/signIn/signIn.dart';
+import 'package:civic_points/userProfile/userProfile.dart';
+import 'package:civic_points/serverConnection/webService.dart';
 import 'package:http/http.dart' as http;
 
 

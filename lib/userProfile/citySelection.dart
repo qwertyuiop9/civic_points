@@ -1,25 +1,41 @@
-import 'package:civic_points/pages/profileParameters.dart';
-import 'package:civic_points/signIn.dart';
+import 'package:civic_points/userProfile/profileParameters.dart';
+import 'package:civic_points/signIn/signIn.dart';
 import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:civic_points/sidebar/sidebar_layout.dart';
+import 'package:civic_points/sidebar/sidebarLayout.dart';
 
+/// Define state of citySelection.
 class citySelectionState extends State<citySelection> {
-  /// Variables to store country state city data in onChanged method.
+  /// Variable to store country data in onChanged method.
   String countryValue = "";
+  /// Variable to store state data in onChanged method.
   String stateValue = "";
+  /// Variable to store city data in onChanged method.
   String cityValue = "";
+  /// Variable to store city data in setState method.
   String comune = "";
+  /// Variable to receive the profile parameters from MyAccountsPage.
   final ProfileParameters profileParameters;
+  /// Receive parameters from MyAccountsPage.
   citySelectionState(this.profileParameters);
+  /// Variable to store city index in list from profileParameters. Variable not used at the moment.
   int indice;
+  /// Variable to view the "Ritorna" button. At the first time it is set to false.
+  /// It changes when user want to modify his home city, after he as send the new city selected.
   bool boolVisualizza = false;
+  /// Variable not used at the moment.
   bool boolInserito = false;
+  /// Variable to view the "Ritorna" button. At the first time it is set to false.
+  /// It changes when user want only to add a city of interest, after he has added the first city.
   bool boolRitorna = false;
+  /// Variable to view the button "Aggiungi comune di interesse".
+  /// Button shown only after sending a selected city.
   bool boolAggiungi = false;
+  /// Variable to communicate to server that the city to add is the home city.
   bool boolSend = false;
 
+  /// Method to send the request for adding a city, or modifying a city home, to the server.
   void sendComune() async {
     var headers = {
       'Content-Type': 'application/json',
@@ -223,6 +239,9 @@ class citySelectionState extends State<citySelection> {
   }
 }
 
+
+/// Screen to select a city.
+/// {@category userProfile}
 class citySelection extends StatefulWidget {
   final ProfileParameters profileParameters;
 

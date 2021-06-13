@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:civic_points/sidebar/sidebar_layout.dart';
+import 'package:civic_points/sidebar/sidebarLayout.dart';
 
 //Screen to confirm event creation
 class createdEvent extends StatelessWidget {

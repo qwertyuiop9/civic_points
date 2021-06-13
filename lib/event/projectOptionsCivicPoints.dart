@@ -1,4 +1,4 @@
-import 'package:civic_points/webService.dart';
+import 'package:civic_points/serverConnection/webService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

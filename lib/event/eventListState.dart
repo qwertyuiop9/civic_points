@@ -1,12 +1,12 @@
-import 'package:civic_points/eventDetailsPage.dart';
-import 'package:civic_points/search/advanced_search.dart';
+import 'package:civic_points/event/eventDetailsPage.dart';
+import 'package:civic_points/search/advancedSearch.dart';
 import 'package:civic_points/search/search.dart';
-import 'package:civic_points/webService.dart';
+import 'package:civic_points/serverConnection/webService.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'event.dart';
+import '../event/event.dart';
 
 class EventsListState extends State<EventsList> {
   List<Event> _eventDetails = [];

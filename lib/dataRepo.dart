@@ -1,3 +1,5 @@
+/// Temporary repository, only for initial test purposes.
+
 final eventIds = <int>[1, 2, 3, 4];
 
 final idEventTitle = {

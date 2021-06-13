@@ -1,8 +1,7 @@
-import 'package:civic_points/login.dart';
+import 'package:civic_points/signIn/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import 'notifications/Notification_Service.dart';
+import 'notifications/notificationService.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,6 +10,7 @@ void main() async {
   runApp(MyApp());
 }
 
+/// Main class
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override

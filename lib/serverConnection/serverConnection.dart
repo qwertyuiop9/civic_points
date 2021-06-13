@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:civic_points/signIn.dart';
+import 'package:civic_points/signIn/signIn.dart';
 
 class serverConnection {
   ///Funzione getAllEvents che ritorna tutti gli eventi nel server, ritorna

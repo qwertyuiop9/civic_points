@@ -1,17 +1,17 @@
-import 'package:civic_points/EventListState.dart';
-import 'package:civic_points/eventCreate.dart';
+import 'package:civic_points/event/eventListState.dart';
+import 'package:civic_points/event/eventCreate.dart';
 import 'package:flutter/material.dart';
-import 'package:civic_points/bloc.navigation_bloc/navigation_bloc.dart';
-import 'package:civic_points/mayorRoleRequest.dart';
-import 'ProjectOptionsCivicPoints.dart';
-import 'package:civic_points/profiloUtente.dart';
-import 'package:civic_points/webService.dart';
-import 'package:http/http.dart' as http;
+import 'package:civic_points/bloc.navigation_bloc/navigationBloc.dart';
+import 'package:civic_points/userProfile/mayorRoleRequest.dart';
+import 'event/projectOptionsCivicPoints.dart';
+import 'package:civic_points/userProfile/userProfile.dart';
+import 'package:civic_points/serverConnection/webService.dart';
 
-//Main screen app
-//class WelcomeScreen extends StatelessWidget with NavigationStates {
+/// Define state of WelcomeScreen.
 class WelcomeScreenState extends State<WelcomeScreen> {
   ProfiloUtente profilo;
+  /// Variable: true if ruolo == 'sindaco', false if ruolo == 'cittadino'.
+  /// If true shows the "Richiedi il ruolo di sindaco" button.
   bool boolRuoloSindaco;
 
   @override
@@ -135,6 +135,7 @@ class WelcomeScreenState extends State<WelcomeScreen> {
   }
 }
 
+/// App main screen.
 class WelcomeScreen extends StatefulWidget with NavigationStates {
   @override
   createState() => WelcomeScreenState();

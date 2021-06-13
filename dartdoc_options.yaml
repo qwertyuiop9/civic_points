@@ -1,0 +1,5 @@
+dartdoc:
+  categories:
+    "userProfile":
+      name: User Profile
+  categoryOrder: ["userProfile"]

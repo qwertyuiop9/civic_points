@@ -1,17 +1,26 @@
 import 'dart:convert';
-import 'package:civic_points/constants.dart';
-import 'package:civic_points/webService.dart';
+import 'package:civic_points/serverConnection/constants.dart';
+import 'package:civic_points/serverConnection/webService.dart';
 
+/// Class to handle user profile JSON object received from server.
 class ProfiloUtente {
+  /// Role of the user.
   String ruolo;
+  /// List of city of interest.
   List<Comune> comuniDiInteresse;
   String sId;
   String uid;
+  /// Home city of the user.
   Comune comuneDiResidenza;
+  /// Version of the user profile.
   int iV;
+  /// User address, added only if the user has asked the mayor role.
   String indirizzo;
+  /// User surname, added only if the user has asked the mayor role.
   String cognomeSindaco;
+  /// City administrated by the mayor, added only if the user has asked the mayor role.
   Comune comuneAmministrato;
+  /// User name, added only if the user has asked the mayor role.
   String nomeSindaco;
 
   ProfiloUtente(
@@ -82,11 +91,15 @@ class ProfiloUtente {
   }
 }
 
+/// Class to handle the object city received from the server.
 class Comune{
   bool enabled;
+  /// List of event categories available for the related city.
   List<String> categorieDisponibili;
   String sId;
+  /// Name of the city.
   String nomeComune;
+  /// Version of the object Comune.
   int iV;
 
   Comune(

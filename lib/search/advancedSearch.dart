@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:civic_points/search/search.dart';
-import 'package:civic_points/search/search_result_page.dart';
+import 'package:civic_points/search/searchResultPage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../signIn.dart';
+import '../signIn/signIn.dart';
 
 class AdvancedSearch extends StatefulWidget {
   final SearchParams searchParams;

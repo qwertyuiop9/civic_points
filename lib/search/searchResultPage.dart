@@ -1,7 +1,7 @@
-import 'package:civic_points/event.dart';
-import 'package:civic_points/eventDetailsPage.dart';
+import 'package:civic_points/event/event.dart';
+import 'package:civic_points/event/eventDetailsPage.dart';
 import 'package:civic_points/search/search.dart';
-import 'package:civic_points/signIn.dart';
+import 'package:civic_points/signIn/signIn.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

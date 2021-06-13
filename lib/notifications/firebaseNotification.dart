@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
-import 'Notification_Handler.dart';
+import 'notificationHandler.dart';
 
-import '../signIn.dart';
+import '../signIn/signIn.dart';
 
 Future<void> initNotificationService () async{
   String deviceToken = await FirebaseMessaging.instance.getToken();
