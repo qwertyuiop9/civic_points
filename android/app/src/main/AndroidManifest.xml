@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="andreavendrame.com.civic_points">
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="Civic Points"
         android:icon="@mipmap/ic_launcher">
