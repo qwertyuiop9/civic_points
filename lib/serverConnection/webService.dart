@@ -14,7 +14,7 @@ class Resource<T> {
 
 class Webservice {
   Future<T> load<T>(Resource<T> resource) async {
-    final response = await http.get(resource.url);
+    final response = await http.get(Uri.parse(resource.url));
     if (response.statusCode == 200) {
       return resource.parse(response);
     } else {
@@ -25,7 +25,7 @@ class Webservice {
 
 class WebserviceToken {
   Future<T> load<T>(Resource<T> resource) async {
-    final response = await http.get(resource.url, headers: { HttpHeaders.authorizationHeader: 'Bearer ${token}'});
+    final response = await http.get(Uri.parse(resource.url), headers: { HttpHeaders.authorizationHeader: 'Bearer ${token}'});
     if (response.statusCode == 200) {
       return resource.parse(response);
     } else {
